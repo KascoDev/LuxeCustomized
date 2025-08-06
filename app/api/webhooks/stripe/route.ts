@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import Stripe from 'stripe'
-import { Resend } from 'resend'
+import { sendEmail } from '@/lib/email'
 import { db } from '@/lib/db'
 import crypto from 'crypto'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20' as any,
 })
-
-const resend = new Resend(process.env.RESEND_API_KEY!)
 
 export async function POST(request: NextRequest) {
   const body = await request.text()
@@ -90,9 +88,8 @@ export async function POST(request: NextRequest) {
 
       // Send confirmation email
       try {
-        await resend.emails.send({
-          from: 'LuxeCustomized <orders@luxecustomized.com>',
-          to: [order.email],
+        await sendEmail({
+          to: order.email,
           subject: `Your ${product.title} is ready for download!`,
           html: generateEmailHtml({
             customerEmail: order.email,
