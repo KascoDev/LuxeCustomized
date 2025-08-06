@@ -5,7 +5,7 @@ import { StructuredData } from '@/components/seo/StructuredData'
 import ProductClient from './ProductClient'
 
 interface Props {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 async function getProduct(id: string) {
@@ -58,7 +58,8 @@ async function getRelatedProducts(categoryId: string, excludeId: string) {
 }
 
 export async function generateMetadata({ params }: Props) {
-  const product = await getProduct(params.id)
+  const { id } = await params
+  const product = await getProduct(id)
   
   if (!product) {
     return {
@@ -71,7 +72,8 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await getProduct(params.id)
+  const { id } = await params
+  const product = await getProduct(id)
   
   if (!product) {
     notFound()

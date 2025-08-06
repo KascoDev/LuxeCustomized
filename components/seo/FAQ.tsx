@@ -18,7 +18,7 @@ export function FAQ({ items, title = "Frequently Asked Questions" }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-16 bg-white" role="region" aria-labelledby="faq-heading">
+    <section id="faq" className="py-16 bg-white" role="region" aria-labelledby="faq-heading">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-12">
           <AIHeading level={2} priority="normal" id="faq-heading">

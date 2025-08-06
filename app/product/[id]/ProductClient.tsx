@@ -26,7 +26,7 @@ interface Product {
   slug: string
   description: string
   price: number
-  originalPrice?: number
+  originalPrice: number | null
   canvaUrl: string
   images: string[]
   featured: boolean

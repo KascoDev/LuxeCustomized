@@ -62,7 +62,7 @@ export function generateMetadata({
       canonical: seo.canonical,
     },
     openGraph: {
-      type: ogType,
+      type: ogType === 'product' ? 'website' : ogType,
       title: seo.title,
       description: seo.description,
       url: seo.canonical,

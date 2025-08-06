@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Filter, Search, Star } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -35,6 +36,7 @@ interface Product {
 }
 
 export default function HomePage() {
+  const { data: session } = useSession()
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
@@ -42,6 +44,9 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [sortBy, setSortBy] = useState("featured")
+  
+  // Check if user is admin
+  const isAdmin = session?.user?.role === 'admin'
 
   useEffect(() => {
     fetchProducts()
@@ -111,24 +116,28 @@ export default function HomePage() {
                 />
               </Link>
               <div className="hidden md:flex items-center space-x-6">
-                <Link href="/templates" className="text-stone-600 hover:text-stone-900 transition-colors">
+                <Link href="#featured" className="text-stone-600 hover:text-stone-900 transition-colors">
                   Templates
                 </Link>
-                <Link href="/collections" className="text-stone-600 hover:text-stone-900 transition-colors">
+                <Link href="#collection" className="text-stone-600 hover:text-stone-900 transition-colors">
                   Collections
                 </Link>
-                <Link href="/about" className="text-stone-600 hover:text-stone-900 transition-colors">
+                <Link href="#faq" className="text-stone-600 hover:text-stone-900 transition-colors">
                   About
                 </Link>
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/account" className="text-stone-600 hover:text-stone-900 transition-colors">
-                Account
+              <Link href="/account/orders" className="text-stone-600 hover:text-stone-900 transition-colors">
+                Orders
               </Link>
-              <Button variant="outline" size="sm">
-                Sign In
-              </Button>
+              {isAdmin && (
+                <Link href="/admin/products">
+                  <Button variant="outline" size="sm">
+                    Admin Dashboard
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -265,7 +274,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-white">
+      <section id="featured" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-serif font-light text-stone-900 mb-4">Featured Templates</h2>
@@ -339,7 +348,7 @@ export default function HomePage() {
       </section>
 
       {/* All Products */}
-      <section id="products-section" className="py-16" style={{ backgroundColor: "#F9F5F0" }}>
+      <section id="collection" className="py-16" style={{ backgroundColor: "#F9F5F0" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12">
             <div>

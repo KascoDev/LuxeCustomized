@@ -84,7 +84,7 @@ export default function OrdersPage() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-8">
               <Link href="/" className="text-2xl font-serif font-bold text-stone-900">
-                Atelier
+                LuxeCustomized
               </Link>
               <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors">
                 <ArrowLeft className="h-4 w-4 mr-2" />

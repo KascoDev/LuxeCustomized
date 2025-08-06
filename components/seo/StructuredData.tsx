@@ -43,7 +43,7 @@ export function AIEOContentStructure({
     }
   }
 
-  const Tag = getSemanticTag() as keyof JSX.IntrinsicElements
+  const Tag = getSemanticTag() as 'main' | 'article' | 'section'
 
   return (
     <Tag 
@@ -69,7 +69,7 @@ export function AIHeading({
   id?: string
   priority?: 'high' | 'normal' | 'low'
 }) {
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements
+  const Tag = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   
   return (
     <Tag 

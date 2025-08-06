@@ -5,7 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { signIn } from "next-auth/react"
+// import { signIn } from "next-auth/react"
 import { Eye, EyeOff, Shield } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -25,17 +25,19 @@ export default function AdminLoginPage() {
     setIsLoading(true)
 
     try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
+      const response = await fetch('/api/simple-auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       })
+      
+      const result = await response.json()
 
-      if (result?.error) {
+      if (result.error) {
         toast.error('Invalid credentials')
       } else {
         toast.success('Welcome back!')
-        router.push('/admin')
+        router.push('/admin/products')
       }
     } catch (error) {
       toast.error('An error occurred')

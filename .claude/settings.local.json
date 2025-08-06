@@ -10,7 +10,19 @@
       "Bash(npx prisma:*)",
       "Bash(npx dotenv -e .env.local -- npx prisma db push:*)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(gh:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git commit:*)",
+      "Bash(npm run:*)",
+      "Bash(taskkill:*)",
+      "Bash(curl:*)",
+      "Bash(rm:*)",
+      "Bash(npx kill-port:*)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": []
   }
