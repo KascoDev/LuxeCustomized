@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase-client"
 
 export default function AdminTestPage() {
-  const [session, setSession] = useState(null)
-  const [user, setUser] = useState(null)
+  const [session, setSession] = useState<any>(null)
+  const [user, setUser] = useState<any>(null)
   const supabase = createClient()
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export default function AdminTestPage() {
           <p>User ID: {user?.id || 'N/A'}</p>
         </div>
 
-        <div className="space-x-4 space-y-4">
+        <div className="space-y-4">
           <button 
             onClick={handleLogin}
             className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mr-4"
@@ -101,4 +101,13 @@ export default function AdminTestPage() {
           </button>
           
           <button 
-            onClick={checkBrowserStora
+            onClick={checkBrowserStorage}
+            className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded"
+          >
+            Check Storage
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
