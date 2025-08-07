@@ -531,10 +531,10 @@ export default function AdminProductsPage() {
                             variant={product.status === "ACTIVE" ? "default" : "secondary"}
                             className={
                               product.status === "ACTIVE" 
-                                ? "bg-green-900/20 text-green-400 border border-green-900/30" 
+                                ? "!bg-green-900/20 !text-green-400 !border !border-green-900/30" 
                                 : product.status === "DRAFT"
-                                ? "bg-yellow-900/20 text-yellow-400 border border-yellow-900/30"
-                                : "bg-stone-700 text-stone-300 border border-stone-600"
+                                ? "!bg-yellow-900/20 !text-yellow-400 !border !border-yellow-900/30"
+                                : "!bg-stone-700 !text-stone-300 !border !border-stone-600"
                             }
                           >
                             {product.status.toLowerCase()}

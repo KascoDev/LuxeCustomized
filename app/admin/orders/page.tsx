@@ -35,11 +35,11 @@ interface Order {
 }
 
 const statusColors = {
-  PENDING: "bg-yellow-900/20 text-yellow-400 border-yellow-900/30",
-  PROCESSING: "bg-blue-900/20 text-blue-400 border-blue-900/30", 
-  COMPLETED: "bg-green-900/20 text-green-400 border-green-900/30",
-  FAILED: "bg-red-900/20 text-red-400 border-red-900/30",
-  REFUNDED: "bg-stone-700 text-stone-300 border-stone-600"
+  PENDING: "!bg-yellow-900/20 !text-yellow-400 !border-yellow-900/30",
+  PROCESSING: "!bg-blue-900/20 !text-blue-400 !border-blue-900/30", 
+  COMPLETED: "!bg-green-900/20 !text-green-400 !border-green-900/30",
+  FAILED: "!bg-red-900/20 !text-red-400 !border-red-900/30",
+  REFUNDED: "!bg-stone-700 !text-stone-300 !border-stone-600"
 }
 
 const statusLabels = {
