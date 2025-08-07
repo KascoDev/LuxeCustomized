@@ -233,86 +233,27 @@ export default function AdminProductsPage() {
   const filteredProducts = products
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Admin Navigation */}
-      <nav className="border-b border-stone-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/admin" className="text-2xl font-serif font-bold text-stone-900">
-                LuxeCustomized Admin
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="text-stone-600 hover:text-stone-900 transition-colors">
-                View Store
-              </Link>
-              <Button variant="outline" size="sm">
-                Sign Out
+    <>
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-serif font-light text-white mb-2">Products</h1>
+            <p className="text-stone-400">Manage your digital product catalog</p>
+          </div>
+
+          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-white hover:bg-stone-100 text-stone-900" onClick={resetForm}>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Product
               </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-white border-r border-stone-200 min-h-screen">
-          <div className="p-6">
-            <nav className="space-y-2">
-              <Link
-                href="/admin"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <BarChart3 className="h-5 w-5" />
-                <span>Dashboard</span>
-              </Link>
-              <Link
-                href="/admin/products"
-                className="flex items-center space-x-3 text-stone-900 bg-stone-100 rounded-lg px-3 py-2"
-              >
-                <Package className="h-5 w-5" />
-                <span>Products</span>
-              </Link>
-              <Link
-                href="/admin/categories"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Settings className="h-5 w-5" />
-                <span>Categories</span>
-              </Link>
-              <Link
-                href="/admin/orders"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Users className="h-5 w-5" />
-                <span>Orders</span>
-              </Link>
-            </nav>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 p-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-serif font-light text-stone-900 mb-2">Products</h1>
-                <p className="text-stone-600">Manage your digital product catalog</p>
-              </div>
-
-              <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button className="bg-stone-900 hover:bg-stone-800 text-white" onClick={resetForm}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Product
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Add New Product</DialogTitle>
-                    <DialogDescription>Create a new digital product for your store</DialogDescription>
-                  </DialogHeader>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Add New Product</DialogTitle>
+                <DialogDescription>Create a new digital product for your store</DialogDescription>
+              </DialogHeader>
 
                   <form onSubmit={handleSubmit}>
                     <div className="grid gap-6 py-4">
@@ -472,29 +413,29 @@ export default function AdminProductsPage() {
                       <Button type="button" variant="outline" onClick={() => setIsAddDialogOpen(false)}>
                         Cancel
                       </Button>
-                      <Button type="submit" className="bg-stone-900 hover:bg-stone-800 text-white">
+                      <Button type="submit" className="bg-white hover:bg-stone-100 text-stone-900">
                         Create Product
                       </Button>
                     </DialogFooter>
                   </form>
                 </DialogContent>
-              </Dialog>
-            </div>
+          </Dialog>
+        </div>
 
-            {/* Search and Filters */}
-            <div className="bg-white rounded-lg border border-stone-200 p-6 mb-6">
-              <div className="flex items-center space-x-4">
+        {/* Search and Filters */}
+        <div className="bg-stone-800 rounded-lg border border-stone-700 p-6 mb-6">
+          <div className="flex items-center space-x-4">
                 <div className="relative flex-1 max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
                   <Input
                     placeholder="Search products..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    className="pl-10 bg-stone-700 border-stone-600 text-white placeholder:text-stone-400"
                   />
                 </div>
                 <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                  <SelectTrigger className="w-48">
+                  <SelectTrigger className="w-48 bg-stone-700 border-stone-600 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -507,7 +448,7 @@ export default function AdminProductsPage() {
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-32">
+                  <SelectTrigger className="w-32 bg-stone-700 border-stone-600 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -521,35 +462,35 @@ export default function AdminProductsPage() {
             </div>
 
             {/* Products Table */}
-            <div className="bg-white rounded-lg border border-stone-200">
+            <div className="bg-stone-800 rounded-lg border border-stone-700">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Product</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Sales</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableRow className="border-stone-700">
+                    <TableHead className="text-stone-300">Product</TableHead>
+                    <TableHead className="text-stone-300">Category</TableHead>
+                    <TableHead className="text-stone-300">Price</TableHead>
+                    <TableHead className="text-stone-300">Status</TableHead>
+                    <TableHead className="text-stone-300">Sales</TableHead>
+                    <TableHead className="text-stone-300">Created</TableHead>
+                    <TableHead className="text-right text-stone-300">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {isLoading ? (
-                    <TableRow>
-                      <TableCell colSpan={7} className="text-center py-8">
+                    <TableRow className="border-stone-700">
+                      <TableCell colSpan={7} className="text-center py-8 text-stone-400">
                         Loading products...
                       </TableCell>
                     </TableRow>
                   ) : filteredProducts.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={7} className="text-center py-8">
+                    <TableRow className="border-stone-700">
+                      <TableCell colSpan={7} className="text-center py-8 text-stone-400">
                         No products found
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredProducts.map((product) => (
-                      <TableRow key={product.id}>
+                      <TableRow key={product.id} className="border-stone-700">
                         <TableCell>
                           <div className="flex items-center space-x-3">
                             {product.images.length > 0 && (
@@ -562,7 +503,7 @@ export default function AdminProductsPage() {
                               />
                             )}
                             <div>
-                              <div className="font-medium text-stone-900">{product.title}</div>
+                              <div className="font-medium text-white">{product.title}</div>
                               {product.featured && (
                                 <Badge variant="secondary" className="text-xs">Featured</Badge>
                               )}
@@ -573,7 +514,7 @@ export default function AdminProductsPage() {
                           <Badge variant="outline">{product.category.name}</Badge>
                         </TableCell>
                         <TableCell>
-                          <div>
+                          <div className="text-white">
                             ${(product.price / 100).toFixed(2)}
                             {product.originalPrice && (
                               <div className="text-xs text-stone-500 line-through">
@@ -596,22 +537,22 @@ export default function AdminProductsPage() {
                             {product.status.toLowerCase()}
                           </Badge>
                         </TableCell>
-                        <TableCell>{product._count.orders}</TableCell>
-                        <TableCell>{new Date(product.createdAt).toLocaleDateString()}</TableCell>
+                        <TableCell className="text-white">{product._count.orders}</TableCell>
+                        <TableCell className="text-white">{new Date(product.createdAt).toLocaleDateString()}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end space-x-2">
-                            <Button variant="ghost" size="sm" asChild>
+                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700" asChild>
                               <Link href={`/product/${product.id}`} target="_blank">
                                 <Eye className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <Button variant="ghost" size="sm" onClick={() => openEditDialog(product)}>
+                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700" onClick={() => openEditDialog(product)}>
                               <Edit className="h-4 w-4" />
                             </Button>
                             <Button 
                               variant="ghost" 
                               size="sm" 
-                              className="text-red-600 hover:text-red-700"
+                              className="text-red-400 hover:text-red-300 hover:bg-stone-700"
                               onClick={() => handleDelete(product.id)}
                               disabled={product._count.orders > 0}
                             >
@@ -625,11 +566,8 @@ export default function AdminProductsPage() {
                 </TableBody>
               </Table>
             </div>
-          </div>
         </div>
       </div>
-
-      {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -795,13 +733,13 @@ export default function AdminProductsPage() {
               <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-stone-900 hover:bg-stone-800 text-white">
+              <Button type="submit" className="bg-white hover:bg-stone-100 text-stone-900">
                 Update Product
               </Button>
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   )
 }

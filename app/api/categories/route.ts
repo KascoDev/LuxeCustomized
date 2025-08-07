@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAuthSession } from '@/lib/auth'
+import { getAuthSession } from '@/lib/auth-server'
 import { db } from '@/lib/db'
 import { z } from 'zod'
 
@@ -32,7 +32,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getAuthSession()
+    const session = await getAuthSession(request)
 
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(

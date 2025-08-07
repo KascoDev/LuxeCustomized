@@ -1,24 +1,116 @@
 {
-  "name": "LuxeCustomized - Premium Digital Templates",
+  "name": "LuxeCustomized - Premium Digital Canva Templates for Entrepreneurs & Creatives",
   "short_name": "LuxeCustomized",
-  "description": "Premium digital templates for entrepreneurs and creatives. Instant download Canva templates for business, social media, and marketing.",
-  "start_url": "/",
+  "description": "Transform your business with premium Canva templates designed by professionals. Instant download digital designs for social media, branding, marketing, and business growth. Perfect for entrepreneurs, coaches, consultants, and creative professionals.",
+  "start_url": "/?utm_source=pwa",
   "display": "standalone",
   "background_color": "#f7f2ec",
   "theme_color": "#1c1917",
   "orientation": "portrait-primary",
-  "categories": ["business", "productivity", "design"],
+  "scope": "/",
+  "categories": [
+    "business",
+    "design", 
+    "productivity",
+    "shopping",
+    "graphics"
+  ],
   "lang": "en-US",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "LuxeCustomized homepage showcasing premium templates"
+    },
+    {
+      "src": "/screenshots/mobile-templates.jpg", 
+      "sizes": "390x844",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Browse premium Canva templates on mobile"
+    }
+  ],
   "icons": [
+    {
+      "src": "/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
     {
       "src": "/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
-      "src": "/icon-512x512.png", 
+      "src": "/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse Templates",
+      "short_name": "Templates",
+      "description": "Browse our collection of premium Canva templates",
+      "url": "/?utm_source=pwa_shortcut",
+      "icons": [
+        {
+          "src": "/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Featured Templates",
+      "short_name": "Featured",
+      "description": "View our most popular template designs",
+      "url": "/#featured?utm_source=pwa_shortcut",
+      "icons": [
+        {
+          "src": "/icon-96x96.png", 
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 480
+  }
 }

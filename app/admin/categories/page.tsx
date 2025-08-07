@@ -136,78 +136,18 @@ export default function AdminCategoriesPage() {
   )
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Admin Navigation */}
-      <nav className="border-b border-stone-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/admin" className="text-2xl font-serif font-bold text-stone-900">
-                LuxeCustomized Admin
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="text-stone-600 hover:text-stone-900 transition-colors">
-                <Eye className="h-4 w-4 mr-2 inline" />
-                View Store
-              </Link>
-              <Button variant="outline" size="sm">
-                Sign Out
-              </Button>
-            </div>
+    <>
+      <div className="p-6">
+        <div className="max-w-6xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-serif font-light text-white mb-2">Categories</h1>
+            <p className="text-stone-400">Organize your products into categories</p>
           </div>
-        </div>
-      </nav>
-
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-white border-r border-stone-200 min-h-screen">
-          <div className="p-6">
-            <nav className="space-y-2">
-              <Link
-                href="/admin"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <BarChart3 className="h-5 w-5" />
-                <span>Dashboard</span>
-              </Link>
-              <Link
-                href="/admin/products"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Package className="h-5 w-5" />
-                <span>Products</span>
-              </Link>
-              <Link
-                href="/admin/categories"
-                className="flex items-center space-x-3 text-stone-900 bg-stone-100 rounded-lg px-3 py-2"
-              >
-                <Settings className="h-5 w-5" />
-                <span>Categories</span>
-              </Link>
-              <Link
-                href="/admin/orders"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Users className="h-5 w-5" />
-                <span>Orders</span>
-              </Link>
-            </nav>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 p-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-serif font-light text-stone-900 mb-2">Categories</h1>
-                <p className="text-stone-600">Organize your products into categories</p>
-              </div>
 
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-stone-900 hover:bg-stone-800 text-white" onClick={resetForm}>
+                  <Button className="bg-white hover:bg-stone-100 text-stone-900" onClick={resetForm}>
                     <Plus className="h-4 w-4 mr-2" />
                     Add Category
                   </Button>
@@ -261,7 +201,7 @@ export default function AdminCategoriesPage() {
                       <Button type="button" variant="outline" onClick={() => setIsAddDialogOpen(false)}>
                         Cancel
                       </Button>
-                      <Button type="submit" className="bg-stone-900 hover:bg-stone-800 text-white">
+                      <Button type="submit" className="bg-white hover:bg-stone-100 text-stone-900">
                         Create Category
                       </Button>
                     </DialogFooter>
@@ -271,46 +211,46 @@ export default function AdminCategoriesPage() {
             </div>
 
             {/* Search */}
-            <div className="bg-white rounded-lg border border-stone-200 p-6 mb-6">
+            <div className="bg-stone-800 rounded-lg border border-stone-700 p-6 mb-6">
               <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
                 <Input
                   placeholder="Search categories..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-stone-700 border-stone-600 text-white placeholder:text-stone-400"
                 />
               </div>
             </div>
 
             {/* Categories Table */}
-            <div className="bg-white rounded-lg border border-stone-200">
+            <div className="bg-stone-800 rounded-lg border border-stone-700">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Description</TableHead>
-                    <TableHead>Products</TableHead>
-                    <TableHead>Created</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableRow className="border-stone-700">
+                    <TableHead className="text-stone-300">Category</TableHead>
+                    <TableHead className="text-stone-300">Description</TableHead>
+                    <TableHead className="text-stone-300">Products</TableHead>
+                    <TableHead className="text-stone-300">Created</TableHead>
+                    <TableHead className="text-right text-stone-300">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {isLoading ? (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8">
+                    <TableRow className="border-stone-700">
+                      <TableCell colSpan={5} className="text-center py-8 text-stone-400">
                         Loading categories...
                       </TableCell>
                     </TableRow>
                   ) : filteredCategories.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8">
+                    <TableRow className="border-stone-700">
+                      <TableCell colSpan={5} className="text-center py-8 text-stone-400">
                         No categories found
                       </TableCell>
                     </TableRow>
                   ) : (
                     filteredCategories.map((category) => (
-                      <TableRow key={category.id}>
+                      <TableRow key={category.id} className="border-stone-700">
                         <TableCell>
                           <div className="flex items-center space-x-3">
                             {category.image && (
@@ -323,29 +263,29 @@ export default function AdminCategoriesPage() {
                               />
                             )}
                             <div>
-                              <div className="font-medium text-stone-900">{category.name}</div>
-                              <div className="text-sm text-stone-500">/{category.slug}</div>
+                              <div className="font-medium text-white">{category.name}</div>
+                              <div className="text-sm text-stone-400">/{category.slug}</div>
                             </div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <div className="max-w-xs truncate text-stone-600">
+                          <div className="max-w-xs truncate text-stone-300">
                             {category.description || "No description"}
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant="outline">{category._count.products} products</Badge>
+                          <Badge variant="outline" className="text-stone-300 border-stone-600">{category._count.products} products</Badge>
                         </TableCell>
-                        <TableCell>{new Date(category.createdAt).toLocaleDateString()}</TableCell>
+                        <TableCell className="text-white">{new Date(category.createdAt).toLocaleDateString()}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end space-x-2">
-                            <Button variant="ghost" size="sm" onClick={() => openEditDialog(category)}>
+                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700" onClick={() => openEditDialog(category)}>
                               <Edit className="h-4 w-4" />
                             </Button>
                             <Button
                               variant="ghost"
                               size="sm"
-                              className="text-red-600 hover:text-red-700"
+                              className="text-red-400 hover:text-red-300 hover:bg-stone-700"
                               onClick={() => handleDelete(category.id)}
                               disabled={category._count.products > 0}
                             >
@@ -359,11 +299,8 @@ export default function AdminCategoriesPage() {
                 </TableBody>
               </Table>
             </div>
-          </div>
         </div>
       </div>
-
-      {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
@@ -414,13 +351,13 @@ export default function AdminCategoriesPage() {
               <Button type="button" variant="outline" onClick={() => setIsEditDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" className="bg-stone-900 hover:bg-stone-800 text-white">
+              <Button type="submit" className="bg-white hover:bg-stone-100 text-stone-900">
                 Update Category
               </Button>
             </DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   )
 }

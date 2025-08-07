@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Upload, X } from "lucide-react"
 import Image from "next/image"
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase-client"
 import { toast } from "sonner"
 
 interface SupabaseUploadProps {
@@ -21,6 +21,7 @@ export function SupabaseUpload({
   bucket = "product-images" 
 }: SupabaseUploadProps) {
   const [uploading, setUploading] = useState(false)
+  const supabase = createClient()
 
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files

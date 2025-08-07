@@ -1,196 +1,260 @@
+"use client"
+
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Package, Users, BarChart3, Settings, DollarSign, Eye } from "lucide-react"
+import { Package, ShoppingCart, BarChart3, DollarSign, TrendingUp, Users, Eye, ArrowRight, Tags } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
-const stats = [
-  {
-    title: "Total Products",
-    value: "42",
-    change: "+12%",
-    icon: Package,
-    color: "text-blue-600",
-  },
-  {
-    title: "Total Orders",
-    value: "1,234",
-    change: "+5%",
-    icon: Users,
-    color: "text-green-600",
-  },
-  {
-    title: "Revenue",
-    value: "$12,345",
-    change: "+18%",
-    icon: DollarSign,
-    color: "text-purple-600",
-  },
-  {
-    title: "Categories",
-    value: "8",
-    change: "+2",
-    icon: BarChart3,
-    color: "text-orange-600",
-  },
-]
+interface DashboardStats {
+  totalProducts: number
+  totalOrders: number
+  totalRevenue: number
+  totalCategories: number
+  recentOrders: any[]
+}
 
 export default function AdminDashboard() {
+  const [stats, setStats] = useState<DashboardStats>({
+    totalProducts: 0,
+    totalOrders: 0,
+    totalRevenue: 0,
+    totalCategories: 0,
+    recentOrders: []
+  })
+  const [isLoading, setIsLoading] = useState(true)
+
+  console.log('🏠 Admin dashboard rendering...')
+
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      setIsLoading(true)
+      
+      // Fetch all data in parallel
+      const [productsRes, ordersRes, categoriesRes] = await Promise.all([
+        fetch('/api/products'),
+        fetch('/api/orders'),
+        fetch('/api/categories')
+      ])
+
+      const products = productsRes.ok ? await productsRes.json() : []
+      const orders = ordersRes.ok ? await ordersRes.json() : []
+      const categories = categoriesRes.ok ? await categoriesRes.json() : []
+
+      // Calculate revenue from completed orders
+      const completedOrders = orders.filter((order: any) => order.status === 'COMPLETED')
+      const totalRevenue = completedOrders.reduce((sum: number, order: any) => sum + order.totalAmount, 0)
+
+      // Get recent orders (last 5)
+      const recentOrders = orders.slice(0, 5)
+
+      setStats({
+        totalProducts: products.length,
+        totalOrders: orders.length,
+        totalRevenue,
+        totalCategories: categories.length,
+        recentOrders
+      })
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const formatPrice = (priceInCents: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(priceInCents / 100)
+  }
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
+  }
+
+  const quickActions = [
+    {
+      title: "View Analytics",
+      description: "Monitor sales and performance metrics",
+      href: "/admin/analytics",
+      icon: BarChart3,
+      color: "text-blue-500"
+    },
+    {
+      title: "Manage Customers",
+      description: "View and manage customer accounts",
+      href: "/admin/customers",
+      icon: Users,
+      color: "text-green-500"
+    },
+    {
+      title: "Store Settings",
+      description: "Configure store preferences",
+      href: "/admin/settings", 
+      icon: Eye,
+      color: "text-purple-500"
+    }
+  ]
+
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Admin Navigation */}
-      <nav className="border-b border-stone-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/admin" className="text-2xl font-serif font-bold text-stone-900">
-                LuxeCustomized Admin
-              </Link>
+    <div className="p-6">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-serif font-bold text-white mb-2">Dashboard</h1>
+        <p className="text-stone-400">Welcome back! Here's what's happening with your store.</p>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <Card className="bg-stone-800 border-stone-700">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-stone-400">Total Revenue</CardTitle>
+            <DollarSign className="h-4 w-4 text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {isLoading ? "..." : formatPrice(stats.totalRevenue)}
             </div>
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="text-stone-600 hover:text-stone-900 transition-colors">
-                <Eye className="h-4 w-4 mr-2 inline" />
-                View Store
-              </Link>
-              <Button variant="outline" size="sm">
-                Sign Out
-              </Button>
+            <p className="text-xs text-stone-400 mt-1">
+              From completed orders
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-stone-800 border-stone-700">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-stone-400">Total Orders</CardTitle>
+            <ShoppingCart className="h-4 w-4 text-blue-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {isLoading ? "..." : stats.totalOrders}
             </div>
-          </div>
-        </div>
-      </nav>
+            <p className="text-xs text-stone-400 mt-1">
+              All time orders
+            </p>
+          </CardContent>
+        </Card>
 
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-white border-r border-stone-200 min-h-screen">
-          <div className="p-6">
-            <nav className="space-y-2">
-              <Link
-                href="/admin"
-                className="flex items-center space-x-3 text-stone-900 bg-stone-100 rounded-lg px-3 py-2"
-              >
-                <BarChart3 className="h-5 w-5" />
-                <span>Dashboard</span>
-              </Link>
-              <Link
-                href="/admin/products"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Package className="h-5 w-5" />
-                <span>Products</span>
-              </Link>
-              <Link
-                href="/admin/categories"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Settings className="h-5 w-5" />
-                <span>Categories</span>
-              </Link>
-              <Link
-                href="/admin/orders"
-                className="flex items-center space-x-3 text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg px-3 py-2 transition-colors"
-              >
-                <Users className="h-5 w-5" />
-                <span>Orders</span>
-              </Link>
-            </nav>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 p-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-serif font-light text-stone-900 mb-2">Dashboard</h1>
-              <p className="text-stone-600">Welcome back! Here's an overview of your store.</p>
+        <Card className="bg-stone-800 border-stone-700">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-stone-400">Products</CardTitle>
+            <Package className="h-4 w-4 text-purple-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {isLoading ? "..." : stats.totalProducts}
             </div>
+            <p className="text-xs text-stone-400 mt-1">
+              Digital templates
+            </p>
+          </CardContent>
+        </Card>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {stats.map((stat) => (
-                <Card key={stat.title}>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium text-stone-600">
-                      {stat.title}
-                    </CardTitle>
-                    <stat.icon className={`h-4 w-4 ${stat.color}`} />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold text-stone-900">{stat.value}</div>
-                    <p className="text-xs text-stone-500 mt-1">
-                      <span className="text-green-600">{stat.change}</span> from last month
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+        <Card className="bg-stone-800 border-stone-700">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-stone-400">Categories</CardTitle>
+            <Tags className="h-4 w-4 text-orange-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-white">
+              {isLoading ? "..." : stats.totalCategories}
             </div>
+            <p className="text-xs text-stone-400 mt-1">
+              Product categories
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
-            {/* Quick Actions */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
-                  <CardDescription>
-                    Common tasks to manage your store
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Link href="/admin/products">
-                    <Button className="w-full justify-start bg-stone-900 hover:bg-stone-800 text-white">
-                      <Package className="h-4 w-4 mr-2" />
-                      Add New Product
-                    </Button>
-                  </Link>
-                  <Link href="/admin/categories">
-                    <Button variant="outline" className="w-full justify-start">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Manage Categories
-                    </Button>
-                  </Link>
-                  <Link href="/admin/orders">
-                    <Button variant="outline" className="w-full justify-start">
-                      <Users className="h-4 w-4 mr-2" />
-                      View Recent Orders
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Quick Actions */}
+        <Card className="bg-stone-800 border-stone-700">
+          <CardHeader>
+            <CardTitle className="text-white">Quick Actions</CardTitle>
+            <CardDescription className="text-stone-400">
+              Common administrative tasks
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {quickActions.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                className="flex items-center p-4 rounded-lg bg-stone-750 hover:bg-stone-700 transition-colors group"
+              >
+                <action.icon className={`h-8 w-8 ${action.color} mr-4`} />
+                <div className="flex-1">
+                  <h3 className="text-white font-medium group-hover:text-white">
+                    {action.title}
+                  </h3>
+                  <p className="text-stone-400 text-sm">
+                    {action.description}
+                  </p>
+                </div>
+                <ArrowRight className="h-5 w-5 text-stone-500 group-hover:text-stone-400" />
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Activity</CardTitle>
-                  <CardDescription>
-                    Latest updates from your store
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-stone-900">New order received</p>
-                        <p className="text-xs text-stone-500">2 minutes ago</p>
-                      </div>
+        {/* Recent Orders */}
+        <Card className="bg-stone-800 border-stone-700">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle className="text-white">Recent Orders</CardTitle>
+              <CardDescription className="text-stone-400">
+                Latest customer orders
+              </CardDescription>
+            </div>
+            <Button variant="ghost" size="sm" className="text-stone-400 hover:text-white" asChild>
+              <Link href="/admin/orders">
+                View All
+                <ArrowRight className="h-4 w-4 ml-1" />
+              </Link>
+            </Button>
+          </CardHeader>
+          <CardContent>
+            {isLoading ? (
+              <p className="text-stone-400 text-center py-4">Loading orders...</p>
+            ) : stats.recentOrders.length === 0 ? (
+              <p className="text-stone-400 text-center py-4">No orders yet</p>
+            ) : (
+              <div className="space-y-4">
+                {stats.recentOrders.map((order: any) => (
+                  <div key={order.id} className="flex items-center justify-between">
+                    <div>
+                      <p className="text-white font-medium">{order.email}</p>
+                      <p className="text-stone-400 text-sm">
+                        {order.items?.length || 0} items • {formatDate(order.createdAt)}
+                      </p>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-stone-900">Product published</p>
-                        <p className="text-xs text-stone-500">1 hour ago</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium text-stone-900">Category created</p>
-                        <p className="text-xs text-stone-500">3 hours ago</p>
-                      </div>
+                    <div className="text-right">
+                      <p className="text-white font-medium">{formatPrice(order.totalAmount)}</p>
+                      <p className={`text-sm ${
+                        order.status === 'COMPLETED' ? 'text-green-400' :
+                        order.status === 'PENDING' ? 'text-yellow-400' :
+                        order.status === 'FAILED' ? 'text-red-400' : 'text-stone-400'
+                      }`}>
+                        {order.status}
+                      </p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

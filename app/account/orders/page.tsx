@@ -42,6 +42,11 @@ export default function OrdersPage() {
   const [email, setEmail] = useState("")
   const [hasSearched, setHasSearched] = useState(false)
 
+  // Set page title
+  useEffect(() => {
+    document.title = 'Access Your Orders | LuxeCustomized'
+  }, [])
+
   const searchOrders = async () => {
     if (!email.trim()) {
       toast.error('Please enter your email address')
@@ -88,72 +93,77 @@ export default function OrdersPage() {
               </Link>
               <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Store
+                Back to Templates
               </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/account" className="text-stone-600 hover:text-stone-900 transition-colors">
-                Account
-              </Link>
-              <Button variant="outline" size="sm">
-                Sign Out
-              </Button>
+              <span className="text-stone-600 text-sm">Need help? Contact support</span>
             </div>
           </div>
         </div>
       </nav>
 
       <div className="max-w-4xl mx-auto px-6 lg:px-8 py-12">
-        {/* Account Navigation */}
-        <div className="flex items-center space-x-6 mb-8">
-          <Link href="/account" className="text-stone-600 hover:text-stone-900 transition-colors">
-            Profile
-          </Link>
-          <Link href="/account/orders" className="text-stone-900 font-medium border-b-2 border-stone-900 pb-1">
-            Orders
-          </Link>
-          <Link href="/account/settings" className="text-stone-600 hover:text-stone-900 transition-colors">
-            Settings
-          </Link>
+        {/* Guest Access Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-serif font-light text-stone-900 mb-4">Access Your Orders</h1>
+          <p className="text-stone-600 max-w-2xl mx-auto">
+            Enter your email address to find and re-download your purchased templates. No account required!
+          </p>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm border border-stone-200">
           <div className="p-8">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-serif font-light text-stone-900 mb-2">Your Orders</h1>
-                <p className="text-stone-600">Access and re-download your purchased templates</p>
+            {orders.length > 0 && (
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h2 className="text-2xl font-serif font-light text-stone-900 mb-2">Your Orders</h2>
+                  <p className="text-stone-600">Access and re-download your purchased templates</p>
+                </div>
+                <div className="flex items-center space-x-2 text-stone-600">
+                  <Package className="h-5 w-5" />
+                  <span className="font-medium">{orders.length} {orders.length === 1 ? 'Order' : 'Orders'} Found</span>
+                </div>
               </div>
-              <div className="flex items-center space-x-2 text-stone-600">
-                <Package className="h-5 w-5" />
-                <span className="font-medium">{orders.length} Orders</span>
-              </div>
-            </div>
+            )}
 
             {/* Search Section */}
             <div className="mb-8">
-              <div className="max-w-md">
-                <Label htmlFor="email" className="text-sm font-medium text-stone-900 mb-2">
-                  Enter your email address to find your orders
+              <div className="max-w-lg mx-auto">
+                <Label htmlFor="email" className="text-sm font-medium text-stone-900 mb-3 block text-center">
+                  Enter the email address you used during checkout
                 </Label>
-                <div className="flex space-x-2">
+                <div className="flex space-x-3">
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Enter your email address"
+                    placeholder="your-email@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onKeyPress={handleKeyPress}
-                    className="flex-1"
+                    className="flex-1 text-center"
                   />
-                  <Button onClick={searchOrders} disabled={isLoading}>
+                  <Button 
+                    onClick={searchOrders} 
+                    disabled={isLoading}
+                    className="px-6 bg-stone-900 hover:bg-stone-800 text-white"
+                  >
                     {isLoading ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-stone-900"></div>
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Searching...
+                      </>
                     ) : (
-                      <Search className="h-4 w-4" />
+                      <>
+                        <Search className="h-4 w-4 mr-2" />
+                        Find Orders
+                      </>
                     )}
                   </Button>
                 </div>
+                <p className="text-xs text-stone-500 text-center mt-2">
+                  This is the same email address you provided when purchasing your templates
+                </p>
               </div>
             </div>
 
@@ -223,7 +233,10 @@ export default function OrdersPage() {
                   {order.downloadExpiry && (
                     <div className="mt-4 p-3 bg-stone-50 rounded-lg">
                       <p className="text-sm text-stone-600">
-                        Download access expires: {new Date(order.downloadExpiry).toLocaleDateString()}
+                        <strong>Download access expires:</strong> {new Date(order.downloadExpiry).toLocaleDateString()}
+                      </p>
+                      <p className="text-xs text-stone-500 mt-1">
+                        Click "Open in Canva" to access your template before this date
                       </p>
                     </div>
                   )}
@@ -235,10 +248,29 @@ export default function OrdersPage() {
               <div className="text-center py-12">
                 <Package className="h-12 w-12 text-stone-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-stone-900 mb-2">No orders found</h3>
-                <p className="text-stone-600 mb-6">No orders were found for this email address</p>
-                <Button asChild>
-                  <Link href="/">Browse Templates</Link>
-                </Button>
+                <p className="text-stone-600 mb-6">No orders were found for the email address: <strong>{email}</strong></p>
+                
+                <div className="space-y-4">
+                  <Button asChild className="mr-4">
+                    <Link href="/">Browse Templates</Link>
+                  </Button>
+                  <Button variant="outline" onClick={() => {
+                    setEmail("")
+                    setHasSearched(false)
+                  }}>
+                    Try Another Email
+                  </Button>
+                </div>
+                
+                <div className="mt-8 p-4 bg-blue-50 rounded-lg max-w-md mx-auto text-left">
+                  <h4 className="font-medium text-stone-900 mb-2">Double-check your email</h4>
+                  <ul className="text-sm text-stone-600 space-y-1">
+                    <li>• Make sure you entered the exact email used during purchase</li>
+                    <li>• Check for typos or extra spaces</li>
+                    <li>• Try any alternative email addresses you may have used</li>
+                    <li>• Check your email inbox for purchase confirmation</li>
+                  </ul>
+                </div>
               </div>
             )}
 
@@ -247,6 +279,28 @@ export default function OrdersPage() {
                 <Search className="h-12 w-12 text-stone-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-stone-900 mb-2">Find Your Orders</h3>
                 <p className="text-stone-600 mb-6">Enter your email address above to find and access your purchased templates</p>
+                
+                {/* Help Section */}
+                <div className="max-w-2xl mx-auto mt-8 p-6 bg-stone-50 rounded-lg text-left">
+                  <h4 className="font-medium text-stone-900 mb-3">What you can do here:</h4>
+                  <ul className="space-y-2 text-stone-600 text-sm">
+                    <li className="flex items-center">
+                      <ExternalLink className="h-4 w-4 mr-2 text-stone-400" />
+                      Access your Canva templates directly
+                    </li>
+                    <li className="flex items-center">
+                      <Download className="h-4 w-4 mr-2 text-stone-400" />
+                      Re-download templates you've already purchased
+                    </li>
+                    <li className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-2 text-stone-400" />
+                      View purchase history and download expiration dates
+                    </li>
+                  </ul>
+                  <p className="text-xs text-stone-500 mt-4">
+                    💡 <strong>Tip:</strong> Bookmark this page to easily find your templates later!
+                  </p>
+                </div>
               </div>
             )}
           </div>

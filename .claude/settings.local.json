@@ -22,7 +22,11 @@
       "Bash(curl:*)",
       "Bash(rm:*)",
       "Bash(npx kill-port:*)",
-      "Bash(npm cache clean:*)"
+      "Bash(npm cache clean:*)",
+      "Bash(mv:*)",
+      "Bash(grep:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(npx next build:*)"
     ],
     "deny": []
   }

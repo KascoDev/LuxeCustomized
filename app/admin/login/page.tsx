@@ -5,13 +5,13 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-// import { signIn } from "next-auth/react"
 import { Eye, EyeOff, Shield } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
+import { createClient } from "@/lib/supabase-client"
 
 export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -19,28 +19,43 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const router = useRouter()
+  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!email || !password) {
+      toast.error('Please enter both email and password')
+      return
+    }
+    
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/simple-auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password: password.trim(),
       })
-      
-      const result = await response.json()
 
-      if (result.error) {
-        toast.error('Invalid credentials')
-      } else {
+      if (error) {
+        toast.error(error.message)
+        return
+      }
+      
+      if (!data.user) {
+        toast.error('Login failed - no user data')
+        return
+      }
+
+      if (data.user.user_metadata?.role === 'admin') {
         toast.success('Welcome back!')
-        router.push('/admin/products')
+        router.push('/admin')
+      } else {
+        toast.error('Access denied: Admin privileges required')
+        await supabase.auth.signOut()
       }
     } catch (error) {
-      toast.error('An error occurred')
+      toast.error('An error occurred during login')
     } finally {
       setIsLoading(false)
     }

@@ -4,14 +4,19 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Filter, Search, Star } from "lucide-react"
-import { useSession } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { AIEOContentStructure, AIHeading, AIContentBlock } from "@/components/seo/StructuredData"
+import { AIEOContentStructure, AIHeading, AIContentBlock, StructuredData } from "@/components/seo/StructuredData"
 import { FAQ, templateFAQData } from "@/components/seo/FAQ"
+import { 
+  generateWebsiteStructuredData, 
+  generateFAQStructuredData, 
+  generateCollectionStructuredData,
+  generateAIContentSchema 
+} from "@/lib/seo"
 
 interface Category {
   id: string
@@ -36,7 +41,6 @@ interface Product {
 }
 
 export default function HomePage() {
-  const { data: session } = useSession()
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
@@ -45,8 +49,8 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [sortBy, setSortBy] = useState("featured")
   
-  // Check if user is admin
-  const isAdmin = session?.user?.role === 'admin'
+  // For public homepage, no admin check needed
+  const isAdmin = false
 
   useEffect(() => {
     fetchProducts()
@@ -97,8 +101,30 @@ export default function HomePage() {
   // Mock rating data since we don't have reviews yet
   const getProductRating = () => (4.5 + Math.random() * 0.5).toFixed(1)
   const getProductReviews = () => Math.floor(Math.random() * 200) + 20
+
+  // Generate structured data for AI and search engines
+  const websiteData = generateWebsiteStructuredData()
+  const faqData = generateFAQStructuredData(templateFAQData)
+  const collectionData = products.length > 0 ? generateCollectionStructuredData(
+    products.map(p => ({ id: p.id, title: p.title, price: p.price, images: p.images })),
+    'Premium Templates'
+  ) : null
+
+  const aiContentData = generateAIContentSchema({
+    title: 'Premium Digital Canva Templates Collection',
+    description: 'Professional Canva templates for entrepreneurs, coaches, and creative professionals. Instant download with commercial license.',
+    contentType: 'template-collection',
+    targetAudience: ['entrepreneurs', 'coaches', 'consultants', 'creative professionals'],
+    keyBenefits: ['instant download', 'commercial license', 'professional design', 'customizable templates'],
+    useCases: ['business branding', 'social media marketing', 'content creation', 'client presentations']
+  })
+
+  const structuredDataArray = [websiteData, faqData, aiContentData, collectionData].filter(Boolean)
+
   return (
     <div className="min-h-screen bg-stone-50">
+      {/* Enhanced structured data for AI and SEO */}
+      <StructuredData data={structuredDataArray} />
       {/* Navigation */}
       <nav className="border-b border-stone-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -129,7 +155,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center space-x-4">
               <Link href="/account/orders" className="text-stone-600 hover:text-stone-900 transition-colors">
-                Orders
+                My Orders
               </Link>
               {isAdmin && (
                 <Link href="/admin/products">
