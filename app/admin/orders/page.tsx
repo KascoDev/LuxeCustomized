@@ -35,11 +35,11 @@ interface Order {
 }
 
 const statusColors = {
-  PENDING: "bg-yellow-100 text-yellow-800",
-  PROCESSING: "bg-blue-100 text-blue-800", 
-  COMPLETED: "bg-green-100 text-green-800",
-  FAILED: "bg-red-100 text-red-800",
-  REFUNDED: "bg-gray-100 text-gray-800"
+  PENDING: "bg-yellow-900/20 text-yellow-400 border-yellow-900/30",
+  PROCESSING: "bg-blue-900/20 text-blue-400 border-blue-900/30", 
+  COMPLETED: "bg-green-900/20 text-green-400 border-green-900/30",
+  FAILED: "bg-red-900/20 text-red-400 border-red-900/30",
+  REFUNDED: "bg-stone-700 text-stone-300 border-stone-600"
 }
 
 const statusLabels = {
@@ -228,7 +228,7 @@ export default function AdminOrdersPage() {
                       onValueChange={(newStatus) => updateOrderStatus(order.id, newStatus)}
                     >
                       <SelectTrigger className="w-[120px] bg-transparent border-none p-0">
-                        <Badge className={statusColors[order.status]}>
+                        <Badge className={`border ${statusColors[order.status]}`}>
                           {statusLabels[order.status]}
                         </Badge>
                       </SelectTrigger>
