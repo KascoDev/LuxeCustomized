@@ -77,14 +77,22 @@ const navigation: NavItem[] = [
   }
 ]
 
-function NavLink({ item }: { item: NavItem }) {
+function NavLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
   const pathname = usePathname()
   const isActive = pathname === item.href
   const Icon = item.icon
 
+  const handleClick = () => {
+    // Auto-minimize sidebar on mobile when navigating
+    if (onNavigate) {
+      onNavigate()
+    }
+  }
+
   return (
     <Link
       href={item.href}
+      onClick={handleClick}
       className={`group flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors min-h-[44px] ${
         isActive
           ? "bg-stone-700 text-white"
@@ -102,12 +110,19 @@ function NavLink({ item }: { item: NavItem }) {
   )
 }
 
-function SidebarContent({ user, handleSignOut }: { user: any, handleSignOut: () => void }) {
+function SidebarContent({ user, handleSignOut, onNavigate }: { user: any, handleSignOut: () => void, onNavigate?: () => void }) {
+  const handleLogoClick = () => {
+    // Auto-minimize sidebar on mobile when clicking logo
+    if (onNavigate) {
+      onNavigate()
+    }
+  }
+
   return (
     <div className="flex flex-col h-full bg-stone-800 text-white">
       {/* Logo */}
       <div className="flex items-center px-4 sm:px-6 py-4 sm:py-6 border-b border-stone-700">
-        <Link href="/admin" className="flex items-center">
+        <Link href="/admin" onClick={handleLogoClick} className="flex items-center">
           <div className="h-8 w-8 bg-white rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
             <span className="text-stone-900 font-bold text-sm">L</span>
           </div>
@@ -121,7 +136,7 @@ function SidebarContent({ user, handleSignOut }: { user: any, handleSignOut: () 
       {/* Navigation */}
       <nav className="flex-1 px-4 sm:px-6 py-4 sm:py-6 space-y-1 sm:space-y-2 overflow-y-auto">
         {navigation.map((item) => (
-          <NavLink key={item.name} item={item} />
+          <NavLink key={item.name} item={item} onNavigate={onNavigate} />
         ))}
       </nav>
 
@@ -187,7 +202,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="p-0 bg-stone-800 border-r-0 w-80 max-w-[80vw] sm:max-w-80">
-            <SidebarContent user={user} handleSignOut={handleSignOut} />
+            <SidebarContent user={user} handleSignOut={handleSignOut} onNavigate={() => setSidebarOpen(false)} />
           </SheetContent>
         </Sheet>
         <div className="ml-4 flex-1">
