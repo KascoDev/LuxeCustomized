@@ -111,10 +111,10 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
     <AIEOContentStructure contentType="product">
       {/* Navigation */}
       <nav className="border-b border-stone-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-2xl font-serif font-bold text-stone-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center space-x-4 sm:space-x-8">
+              <Link href="/" className="text-xl sm:text-2xl font-serif font-bold text-stone-900">
                 LuxeCustomized
               </Link>
             </div>
@@ -139,10 +139,10 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        <div className="grid lg:grid-cols-2 gap-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12 lg:gap-16">
           {/* Product Images */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div className="aspect-square rounded-lg overflow-hidden bg-stone-100">
               <Image
                 src={product.images[selectedImageIndex] || "/placeholder.svg"}
@@ -152,13 +152,14 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
                 className="w-full h-full object-cover"
                 priority
                 quality={90}
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
                 placeholder="blur"
                 blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                 itemProp="image"
               />
             </div>
             {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 sm:gap-4">
                 {product.images.map((image, index) => (
                   <button
                     key={index}
@@ -176,6 +177,7 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
                       height={150}
                       className="w-full h-full object-cover"
                       quality={85}
+                      sizes="(max-width: 640px) 33vw, 150px"
                       placeholder="blur"
                       blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                     />
@@ -187,50 +189,50 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
 
           {/* Product Details */}
           <AIEOContentStructure section="product-details">
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               <div>
-                <Badge variant="secondary" className="mb-4" itemProp="category">
+                <Badge variant="secondary" className="mb-3 sm:mb-4 text-xs sm:text-sm" itemProp="category">
                   {product.category.name}
                 </Badge>
-                <AIHeading level={1} priority="high">
+                <AIHeading level={1} priority="high" className="text-2xl sm:text-3xl md:text-4xl font-serif font-light text-stone-900 mb-3 sm:mb-4 leading-tight">
                   <span itemProp="name">{product.title}</span>
                 </AIHeading>
-                <div className="flex items-center space-x-4 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4 sm:mb-6">
                   <div className="flex items-center" itemProp="aggregateRating" itemScope itemType="https://schema.org/AggregateRating">
-                    <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
-                    <span className="text-lg text-stone-600 ml-2" itemProp="ratingValue">{rating.toFixed(1)}</span>
+                    <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-amber-400 text-amber-400" />
+                    <span className="text-base sm:text-lg text-stone-600 ml-2" itemProp="ratingValue">{rating.toFixed(1)}</span>
                     <meta itemProp="bestRating" content="5" />
                     <meta itemProp="worstRating" content="1" />
                   </div>
-                  <span className="text-stone-400" itemProp="reviewCount">({reviews} reviews)</span>
+                  <span className="text-sm sm:text-base text-stone-400" itemProp="reviewCount">({reviews} reviews)</span>
                 </div>
-                <div className="flex items-baseline space-x-4 mb-8" itemProp="offers" itemScope itemType="https://schema.org/Offer">
-                  <span className="text-4xl font-light text-stone-900" itemProp="price" content={(product.price / 100).toString()}>
+                <div className="flex flex-col sm:flex-row sm:items-baseline space-y-2 sm:space-y-0 sm:space-x-4 mb-6 sm:mb-8" itemProp="offers" itemScope itemType="https://schema.org/Offer">
+                  <span className="text-3xl sm:text-4xl font-light text-stone-900" itemProp="price" content={(product.price / 100).toString()}>
                     ${(product.price / 100).toFixed(2)}
                   </span>
                   <meta itemProp="priceCurrency" content="USD" />
                   <meta itemProp="availability" content="https://schema.org/InStock" />
                   {product.originalPrice && (
                     <>
-                      <span className="text-xl text-stone-400 line-through">${(product.originalPrice / 100).toFixed(2)}</span>
-                      <Badge variant="destructive">{Math.round((1 - product.price / product.originalPrice) * 100)}% OFF</Badge>
+                      <span className="text-lg sm:text-xl text-stone-400 line-through">${(product.originalPrice / 100).toFixed(2)}</span>
+                      <Badge variant="destructive" className="text-xs sm:text-sm">{Math.round((1 - product.price / product.originalPrice) * 100)}% OFF</Badge>
                     </>
                   )}
                 </div>
               </div>
 
               <AIContentBlock type="description" importance="high">
-                <p className="text-lg text-stone-600 leading-relaxed" itemProp="description">
+                <p className="text-base sm:text-lg text-stone-600 leading-relaxed" itemProp="description">
                   {product.description}
                 </p>
               </AIContentBlock>
 
               {/* Purchase Form */}
-              <div className="bg-stone-50 rounded-lg p-6 border border-stone-200">
-                <AIHeading level={3} priority="normal">Instant Download</AIHeading>
-                <p className="text-stone-600 mb-6">Get immediate access to your template after purchase. No account required!</p>
+              <div className="bg-stone-50 rounded-lg p-4 sm:p-6 border border-stone-200">
+                <AIHeading level={3} priority="normal" className="text-lg sm:text-xl">Instant Download</AIHeading>
+                <p className="text-sm sm:text-base text-stone-600 mb-4 sm:mb-6">Get immediate access to your template after purchase. No account required!</p>
                 
-                <form onSubmit={handlePurchase} className="space-y-4">
+                <form onSubmit={handlePurchase} className="space-y-3 sm:space-y-4">
                   <div>
                     <Label htmlFor="email" className="text-stone-700 font-medium">
                       Email Address
@@ -252,10 +254,15 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
                   
                   <Button 
                     type="submit" 
-                    className="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 text-lg"
+                    className="w-full bg-stone-900 hover:bg-stone-800 text-white py-3 text-base sm:text-lg"
                     disabled={isPurchasing}
                   >
-                    {isPurchasing ? 'Processing...' : `Purchase Now - $${(product.price / 100).toFixed(2)}`}
+                    {isPurchasing ? 'Processing...' : (
+                      <>
+                        <span className="hidden sm:inline">Purchase Now - ${(product.price / 100).toFixed(2)}</span>
+                        <span className="sm:hidden">Buy Now - ${(product.price / 100).toFixed(2)}</span>
+                      </>
+                    )}
                   </Button>
                 </form>
 

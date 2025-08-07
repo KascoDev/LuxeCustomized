@@ -128,16 +128,16 @@ export default function HomePage() {
       <StructuredData data={structuredDataArray} />
       {/* Navigation */}
       <nav className="border-b border-stone-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center space-x-4 sm:space-x-8">
               <Link href="/" className="flex items-center">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LCC-lbqsNL0FobNj8eWA0CiO5u7QKAwekD.png"
                   alt="Luxe Customized"
                   width={180}
                   height={90}
-                  className="h-12 w-auto"
+                  className="h-10 sm:h-12 w-auto"
                   priority
                   quality={90}
                 />
@@ -154,12 +154,12 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="md:hidden">
                 <Sheet>
                   <SheetTrigger asChild>
-                    <Button variant="ghost" size="icon" className="text-stone-600">
-                      <Menu className="h-6 w-6" />
+                    <Button variant="ghost" size="icon" className="text-stone-600 p-1">
+                      <Menu className="h-5 w-5" />
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="p-0 bg-white border-r-0 w-64">
@@ -200,12 +200,12 @@ export default function HomePage() {
                   </SheetContent>
                 </Sheet>
               </div>
-              <Link href="/account/orders" className="hidden md:block text-stone-600 hover:text-stone-900 transition-colors">
+              <Link href="/account/orders" className="hidden md:block text-stone-600 hover:text-stone-900 transition-colors text-sm lg:text-base">
                 My Orders
               </Link>
               {isAdmin && (
                 <Link href="/admin/products" className="hidden md:block">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="text-sm">
                     Admin Dashboard
                   </Button>
                 </Link>
@@ -216,32 +216,32 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-24 lg:py-32 overflow-hidden" style={{ backgroundColor: "#F7F2EC" }}>
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-32 overflow-hidden" style={{ backgroundColor: "#F7F2EC" }}>
         {/* Decorative Stars */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Top left star */}
-          <div className="absolute top-12 left-12 text-amber-400">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+          <div className="absolute top-6 left-4 sm:top-12 sm:left-12 text-amber-400">
+            <svg width="20" height="20" className="sm:w-8 sm:h-8" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           </div>
 
           {/* Top right sparkle */}
-          <div className="absolute top-16 right-20 text-amber-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <div className="absolute top-8 right-4 sm:top-16 sm:right-20 text-amber-400">
+            <svg width="16" height="16" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0l2.5 7.5L22 10l-7.5 2.5L12 20l-2.5-7.5L2 10l7.5-2.5L12 0z" />
             </svg>
           </div>
 
-          {/* Right side star */}
-          <div className="absolute top-32 right-12 text-amber-400">
+          {/* Right side star - hidden on mobile */}
+          <div className="absolute top-32 right-12 text-amber-400 hidden sm:block">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
           </div>
 
-          {/* Left side sparkle */}
-          <div className="absolute top-64 left-16 text-amber-400">
+          {/* Left side sparkle - hidden on mobile */}
+          <div className="absolute top-64 left-16 text-amber-400 hidden sm:block">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0l2.5 7.5L22 10l-7.5 2.5L12 20l-2.5-7.5L2 10l7.5-2.5L12 0z" />
             </svg>
@@ -278,8 +278,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
             {/* Luxe Script Text */}
-            <div className="mb-6">
-              <div className="text-8xl lg:text-9xl font-serif italic text-stone-700 mb-2 relative">
+            <div className="mb-4 sm:mb-6">
+              <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-serif italic text-stone-700 mb-2 relative">
                 <span
                   className="relative inline-block"
                   style={{
@@ -293,30 +293,30 @@ export default function HomePage() {
                   Luxe
                 </span>
               </div>
-              <div className="text-lg lg:text-xl tracking-[0.3em] text-stone-600 font-medium uppercase">CUSTOMIZED</div>
+              <div className="text-sm sm:text-base md:text-lg lg:text-xl tracking-[0.2em] sm:tracking-[0.3em] text-stone-600 font-medium uppercase">CUSTOMIZED</div>
             </div>
 
             <AIHeading level={1} priority="high" id="main-heading">
-              <span className="text-4xl lg:text-5xl font-serif font-light text-stone-900 mb-8 leading-tight block">
+              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-light text-stone-900 mb-6 sm:mb-8 leading-tight block">
                 Premium Digital Canva Templates
               </span>
             </AIHeading>
 
             <AIContentBlock type="description" importance="high">
-              <p className="text-xl text-stone-600 mb-12 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-stone-600 mb-8 sm:mb-10 md:mb-12 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0">
                 Professional Canva templates for entrepreneurs, coaches, and creative professionals. 
                 Instant download with commercial license included. Transform your business with premium designs.
               </p>
             </AIContentBlock>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-stone-900 hover:bg-stone-800 text-white px-8 py-3 text-lg">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0">
+              <Button size="lg" className="bg-stone-900 hover:bg-stone-800 text-white px-6 sm:px-8 py-3 text-base sm:text-lg">
                 Explore Collection →
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="px-8 py-3 text-lg bg-transparent border-stone-400 text-stone-700 hover:bg-stone-100"
+                className="px-6 sm:px-8 py-3 text-base sm:text-lg bg-transparent border-stone-400 text-stone-700 hover:bg-stone-100"
               >
                 View Lookbook
               </Button>
@@ -326,9 +326,9 @@ export default function HomePage() {
       </section>
 
       {/* Category Navigation Bar */}
-      <section className="bg-stone-900 py-6">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-12">
+      <section className="bg-stone-900 py-4 sm:py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-8 md:space-x-12">
             {categories.slice(0, 3).map((category) => (
               <button
                 key={category.id}
@@ -336,7 +336,7 @@ export default function HomePage() {
                   setSelectedCategory(category.id)
                   document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' })
                 }}
-                className="text-stone-300 hover:text-white transition-colors text-lg tracking-wide uppercase"
+                className="text-stone-300 hover:text-white transition-colors text-base sm:text-lg tracking-wide uppercase"
               >
                 {category.name}
               </button>
@@ -346,16 +346,16 @@ export default function HomePage() {
       </section>
 
       {/* Featured Products */}
-      <section id="featured" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-serif font-light text-stone-900 mb-4">Featured Templates</h2>
-            <p className="text-stone-600 max-w-2xl mx-auto">
+      <section id="featured" className="py-12 sm:py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-light text-stone-900 mb-3 sm:mb-4">Featured Templates</h2>
+            <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto px-4 sm:px-0">
               Our most coveted designs, chosen for their exceptional quality and timeless appeal.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
             {isLoading ? (
               // Loading skeleton
               [...Array(3)].map((_, i) => (
@@ -421,27 +421,27 @@ export default function HomePage() {
       </section>
 
       {/* All Products */}
-      <section id="collection" className="py-16" style={{ backgroundColor: "#F9F5F0" }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12">
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-serif font-light text-stone-900 mb-4">Complete Collection</h2>
-              <p className="text-stone-600">Discover our full range of premium digital templates and design assets.</p>
+      <section id="collection" className="py-12 sm:py-16" style={{ backgroundColor: "#F9F5F0" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8 sm:mb-10 md:mb-12">
+            <div className="mb-6 lg:mb-0">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-light text-stone-900 mb-3 sm:mb-4">Complete Collection</h2>
+              <p className="text-sm sm:text-base text-stone-600">Discover our full range of premium digital templates and design assets.</p>
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-8 lg:mt-0">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 lg:mt-0">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
                 <Input 
                   placeholder="Search templates..." 
-                  className="pl-10 w-full sm:w-64"
+                  className="pl-10 w-full sm:w-48 md:w-64"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-full sm:w-48">
+                <SelectTrigger className="w-full sm:w-40 md:w-48">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue />
                 </SelectTrigger>
@@ -455,7 +455,7 @@ export default function HomePage() {
                 </SelectContent>
               </Select>
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-full sm:w-32">
+                <SelectTrigger className="w-full sm:w-28 md:w-32">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -468,7 +468,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {isLoading ? (
               // Loading skeleton
               [...Array(6)].map((_, i) => (
@@ -540,8 +540,8 @@ export default function HomePage() {
             )}
           </div>
 
-          <div className="text-center mt-16">
-            <Button variant="outline" size="lg" className="px-8 bg-transparent">
+          <div className="text-center mt-12 sm:mt-16">
+            <Button variant="outline" size="lg" className="px-6 sm:px-8 bg-transparent">
               Load More Templates
             </Button>
           </div>
@@ -552,14 +552,14 @@ export default function HomePage() {
       <FAQ items={templateFAQData} />
 
       {/* Newsletter */}
-      <section className="py-24 bg-stone-900">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-serif font-light text-white mb-6">Stay Inspired</h2>
-          <p className="text-stone-300 text-lg mb-8 max-w-2xl mx-auto">
+      <section className="py-16 sm:py-20 md:py-24 bg-stone-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-light text-white mb-4 sm:mb-6">Stay Inspired</h2>
+          <p className="text-stone-300 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto">
             Join our community of discerning creatives. Receive exclusive templates, design insights, and early access
             to new collections.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 max-w-md mx-auto">
             <Input
               placeholder="Enter your email"
               className="bg-white/10 border-white/20 text-white placeholder:text-stone-400"
@@ -571,8 +571,8 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="bg-white border-t border-stone-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center mb-4">
                 <Image
@@ -639,7 +639,7 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-stone-200 mt-12 pt-8 text-center text-stone-500">
+          <div className="border-t border-stone-200 mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 text-center text-stone-500">
             <p>&copy; 2024 Luxe Customized. All rights reserved.</p>
           </div>
         </div>

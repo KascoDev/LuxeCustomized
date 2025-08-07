@@ -56,6 +56,15 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Improve mobile scrolling */
+    -webkit-overflow-scrolling: touch;
+    /* Prevent zoom on form focus */
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  /* Ensure consistent mobile viewport */
+  html {
+    -webkit-text-size-adjust: 100%;
   }
   
   /* Admin pages mobile viewport fix */
@@ -88,9 +97,70 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Custom scrollbar */
+/* Mobile-first utilities */
+@layer utilities {
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Better mobile text sizing */
+  .mobile-text-base {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  @media (min-width: 640px) {
+    .mobile-text-base {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
+  
+  /* Mobile-optimized containers */
+  .mobile-container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  @media (min-width: 640px) {
+    .mobile-container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .mobile-container {
+      max-width: 1024px;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+}
+
+/* Custom scrollbar - hide on mobile */
 ::-webkit-scrollbar {
   width: 8px;
+}
+
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+  }
 }
 
 ::-webkit-scrollbar-track {
@@ -104,4 +174,41 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #78716c;
+}
+
+/* Mobile-specific optimizations */
+@layer base {
+  /* Prevent horizontal scroll */
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* Better mobile touch targets */
+  button, [role="button"], input[type="submit"], input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  @media (max-width: 640px) {
+    button, [role="button"], input[type="submit"], input[type="button"] {
+      min-height: 48px;
+    }
+  }
+  
+  /* Better mobile form inputs */
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  @media (max-width: 640px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+  
+  /* Improve mobile image loading */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }

@@ -24,9 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
         <meta name="theme-color" content="#1c1917" />
         <meta name="msapplication-TileColor" content="#1c1917" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         
         {/* SEO and Performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -50,7 +54,7 @@ export default function RootLayout({
         <meta name="ai-business-model" content="b2c-digital-downloads" />
         <meta name="ai-primary-intent" content="purchase-premium-canva-templates" />
       </head>
-      <body className={`antialiased ${GeistSans.className}`}>
+      <body className={`antialiased ${GeistSans.className} safe-area-inset`}>
         <StructuredData data={[organizationData, websiteData]} />
         
         {/* Skip to main content for accessibility */}

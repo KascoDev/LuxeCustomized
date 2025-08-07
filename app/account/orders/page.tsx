@@ -85,10 +85,10 @@ export default function OrdersPage() {
     <div className="min-h-screen bg-stone-50">
       {/* Navigation */}
       <nav className="border-b border-stone-200 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-2xl font-serif font-bold text-stone-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center space-x-4 sm:space-x-8">
+              <Link href="/" className="text-xl sm:text-2xl font-serif font-bold text-stone-900">
                 LuxeCustomized
               </Link>
               <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors text-sm sm:text-base">
@@ -104,17 +104,17 @@ export default function OrdersPage() {
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
         {/* Guest Access Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-serif font-light text-stone-900 mb-4">Access Your Orders</h1>
-          <p className="text-stone-600 max-w-2xl mx-auto">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-light text-stone-900 mb-3 sm:mb-4">Access Your Orders</h1>
+          <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto px-4 sm:px-0">
             Enter your email address to find and re-download your purchased templates. No account required!
           </p>
         </div>
 
         <div className="bg-white rounded-lg shadow-sm border border-stone-200">
-          <div className="p-8">
+          <div className="p-4 sm:p-6 md:p-8">
             {orders.length > 0 && (
               <div className="flex items-center justify-between mb-8">
                 <div>
