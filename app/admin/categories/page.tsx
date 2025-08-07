@@ -137,12 +137,12 @@ export default function AdminCategoriesPage() {
 
   return (
     <>
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
+      <div className="p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-3xl font-serif font-light text-white mb-2">Categories</h1>
-            <p className="text-stone-400">Organize your products into categories</p>
+            <h1 className="text-2xl sm:text-3xl font-serif font-light text-white mb-2">Categories</h1>
+            <p className="text-sm sm:text-base text-stone-400">Organize your products into categories</p>
           </div>
 
               <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -211,8 +211,8 @@ export default function AdminCategoriesPage() {
             </div>
 
             {/* Search */}
-            <div className="bg-stone-800 rounded-lg border border-stone-700 p-6 mb-6">
-              <div className="relative max-w-md">
+            <div className="bg-stone-800 rounded-lg border border-stone-700 p-4 sm:p-6 mb-6">
+              <div className="relative w-full sm:max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
                 <Input
                   placeholder="Search categories..."
@@ -224,7 +224,8 @@ export default function AdminCategoriesPage() {
             </div>
 
             {/* Categories Table */}
-            <div className="bg-stone-800 rounded-lg border border-stone-700">
+            <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
+              <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="border-stone-700">
@@ -298,6 +299,7 @@ export default function AdminCategoriesPage() {
                   )}
                 </TableBody>
               </Table>
+              </div>
             </div>
         </div>
       </div>

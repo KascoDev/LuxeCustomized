@@ -129,17 +129,17 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-3xl font-serif font-bold text-white mb-2">Orders</h1>
-          <p className="text-stone-400">Manage customer orders and downloads</p>
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Orders</h1>
+          <p className="text-sm sm:text-base text-stone-400">Manage customer orders and downloads</p>
         </div>
         <Button 
           onClick={fetchOrders}
           variant="outline" 
-          className="border-stone-600 bg-stone-800 text-white hover:bg-stone-700"
+          className="border-stone-600 bg-stone-800 text-white hover:bg-stone-700 w-full sm:w-auto"
         >
           <RefreshCw className="h-4 w-4 mr-2" />
           Refresh
@@ -147,8 +147,8 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex items-center space-x-4 mb-6">
-        <div className="relative flex-1 max-w-md">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+        <div className="relative w-full sm:flex-1 sm:max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
           <Input
             type="text"
@@ -159,7 +159,7 @@ export default function AdminOrdersPage() {
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-[150px] bg-stone-800 border-stone-600 text-white">
+          <SelectTrigger className="w-full sm:w-[150px] bg-stone-800 border-stone-600 text-white">
             <SelectValue placeholder="Filter by status" />
           </SelectTrigger>
           <SelectContent className="bg-stone-800 border-stone-600">
@@ -175,6 +175,7 @@ export default function AdminOrdersPage() {
 
       {/* Orders Table */}
       <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
+        <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="border-stone-700">
@@ -274,10 +275,11 @@ export default function AdminOrdersPage() {
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 sm:mt-8">
         <div className="bg-stone-800 p-4 rounded-lg border border-stone-700">
           <h3 className="text-stone-400 text-sm mb-1">Total Orders</h3>
           <p className="text-2xl font-bold text-white">{orders.length}</p>

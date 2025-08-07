@@ -107,15 +107,15 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-serif font-bold text-white mb-2">Dashboard</h1>
-        <p className="text-stone-400">Welcome back! Here's what's happening with your store.</p>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Dashboard</h1>
+        <p className="text-sm sm:text-base text-stone-400">Welcome back! Here's what's happening with your store.</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <Card className="bg-stone-800 border-stone-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-stone-400">Total Revenue</CardTitle>
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {/* Quick Actions */}
         <Card className="bg-stone-800 border-stone-700">
           <CardHeader>
@@ -186,16 +186,16 @@ export default function AdminDashboard() {
               Common administrative tasks
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4">
             {quickActions.map((action) => (
               <Link
                 key={action.href}
                 href={action.href}
-                className="flex items-center p-4 rounded-lg bg-stone-750 hover:bg-stone-700 transition-colors group"
+                className="flex items-center p-3 sm:p-4 rounded-lg bg-stone-750 hover:bg-stone-700 transition-colors group"
               >
-                <action.icon className={`h-8 w-8 ${action.color} mr-4`} />
-                <div className="flex-1">
-                  <h3 className="text-white font-medium group-hover:text-white">
+                <action.icon className={`h-6 w-6 sm:h-8 sm:w-8 ${action.color} mr-3 sm:mr-4 flex-shrink-0`} />
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-white font-medium group-hover:text-white text-sm sm:text-base">
                     {action.title}
                   </h3>
                   <p className="text-stone-400 text-sm">

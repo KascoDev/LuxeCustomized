@@ -234,12 +234,12 @@ export default function AdminProductsPage() {
 
   return (
     <>
-      <div className="p-6">
-        <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
+      <div className="p-4 sm:p-6">
+        <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-3xl font-serif font-light text-white mb-2">Products</h1>
-            <p className="text-stone-400">Manage your digital product catalog</p>
+            <h1 className="text-2xl sm:text-3xl font-serif font-light text-white mb-2">Products</h1>
+            <p className="text-sm sm:text-base text-stone-400">Manage your digital product catalog</p>
           </div>
 
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -257,7 +257,7 @@ export default function AdminProductsPage() {
 
                   <form onSubmit={handleSubmit}>
                     <div className="grid gap-6 py-4">
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="title">Product Title</Label>
                           <Input
@@ -423,9 +423,9 @@ export default function AdminProductsPage() {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-stone-800 rounded-lg border border-stone-700 p-6 mb-6">
-          <div className="flex items-center space-x-4">
-                <div className="relative flex-1 max-w-md">
+        <div className="bg-stone-800 rounded-lg border border-stone-700 p-4 sm:p-6 mb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="relative w-full sm:flex-1 sm:max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
                   <Input
                     placeholder="Search products..."
@@ -434,8 +434,9 @@ export default function AdminProductsPage() {
                     className="pl-10 bg-stone-700 border-stone-600 text-white placeholder:text-stone-400"
                   />
                 </div>
+                <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                  <SelectTrigger className="w-48 bg-stone-700 border-stone-600 text-white">
+                  <SelectTrigger className="w-full sm:w-48 bg-stone-700 border-stone-600 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -448,7 +449,7 @@ export default function AdminProductsPage() {
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-32 bg-stone-700 border-stone-600 text-white">
+                  <SelectTrigger className="w-full sm:w-32 bg-stone-700 border-stone-600 text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -458,11 +459,13 @@ export default function AdminProductsPage() {
                     <SelectItem value="ARCHIVED">Archived</SelectItem>
                   </SelectContent>
                 </Select>
+                </div>
               </div>
             </div>
 
             {/* Products Table */}
-            <div className="bg-stone-800 rounded-lg border border-stone-700">
+            <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
+              <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow className="border-stone-700">
@@ -565,6 +568,7 @@ export default function AdminProductsPage() {
                   )}
                 </TableBody>
               </Table>
+              </div>
             </div>
         </div>
       </div>
