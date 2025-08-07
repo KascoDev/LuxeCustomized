@@ -107,15 +107,15 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-3 sm:p-4 lg:p-6 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Dashboard</h1>
-        <p className="text-sm sm:text-base text-stone-400">Welcome back! Here's what's happening with your store.</p>
+      <div className="mb-4 sm:mb-6 lg:mb-8">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-white mb-1 sm:mb-2">Dashboard</h1>
+        <p className="text-xs sm:text-sm lg:text-base text-stone-400">Welcome back! Here's what's happening with your store.</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-6 lg:mb-8">
         <Card className="bg-stone-800 border-stone-700">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-stone-400">Total Revenue</CardTitle>
@@ -186,23 +186,23 @@ export default function AdminDashboard() {
               Common administrative tasks
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3 sm:space-y-4">
+          <CardContent className="space-y-2 sm:space-y-3">
             {quickActions.map((action) => (
               <Link
                 key={action.href}
                 href={action.href}
-                className="flex items-center p-3 sm:p-4 rounded-lg bg-stone-750 hover:bg-stone-700 transition-colors group"
+                className="flex items-center p-3 sm:p-4 rounded-lg bg-stone-750 hover:bg-stone-700 transition-colors group min-h-[60px] sm:min-h-[70px]"
               >
-                <action.icon className={`h-6 w-6 sm:h-8 sm:w-8 ${action.color} mr-3 sm:mr-4 flex-shrink-0`} />
+                <action.icon className={`h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 ${action.color} mr-3 sm:mr-4 flex-shrink-0`} />
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-white font-medium group-hover:text-white text-sm sm:text-base">
+                  <h3 className="text-white font-medium group-hover:text-white text-sm sm:text-base truncate">
                     {action.title}
                   </h3>
-                  <p className="text-stone-400 text-sm">
+                  <p className="text-stone-400 text-xs sm:text-sm line-clamp-1">
                     {action.description}
                   </p>
                 </div>
-                <ArrowRight className="h-5 w-5 text-stone-500 group-hover:text-stone-400" />
+                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-stone-500 group-hover:text-stone-400 flex-shrink-0" />
               </Link>
             ))}
           </CardContent>
@@ -226,22 +226,22 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-stone-400 text-center py-4">Loading orders...</p>
+              <p className="text-stone-400 text-center py-4 text-sm">Loading orders...</p>
             ) : stats.recentOrders.length === 0 ? (
-              <p className="text-stone-400 text-center py-4">No orders yet</p>
+              <p className="text-stone-400 text-center py-4 text-sm">No orders yet</p>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {stats.recentOrders.map((order: any) => (
-                  <div key={order.id} className="flex items-center justify-between">
-                    <div>
-                      <p className="text-white font-medium">{order.email}</p>
-                      <p className="text-stone-400 text-sm">
+                  <div key={order.id} className="flex items-start sm:items-center justify-between gap-3 p-2 sm:p-0 rounded-lg sm:rounded-none bg-stone-750 sm:bg-transparent">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-white font-medium text-sm sm:text-base truncate">{order.email}</p>
+                      <p className="text-stone-400 text-xs sm:text-sm">
                         {order.items?.length || 0} items • {formatDate(order.createdAt)}
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="text-white font-medium">{formatPrice(order.totalAmount)}</p>
-                      <p className={`text-sm ${
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-white font-medium text-sm sm:text-base">{formatPrice(order.totalAmount)}</p>
+                      <p className={`text-xs sm:text-sm ${
                         order.status === 'COMPLETED' ? 'text-green-400' :
                         order.status === 'PENDING' ? 'text-yellow-400' :
                         order.status === 'FAILED' ? 'text-red-400' : 'text-stone-400'

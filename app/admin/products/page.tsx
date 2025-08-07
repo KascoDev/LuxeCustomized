@@ -234,12 +234,12 @@ export default function AdminProductsPage() {
 
   return (
     <>
-      <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-4 sm:p-6">
+      <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-3 sm:p-4 lg:p-6">
         <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-light text-white mb-2">Products</h1>
-            <p className="text-sm sm:text-base text-stone-400">Manage your digital product catalog</p>
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif font-light text-white mb-1 sm:mb-2">Products</h1>
+            <p className="text-xs sm:text-sm lg:text-base text-stone-400">Manage your digital product catalog</p>
           </div>
 
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -249,7 +249,7 @@ export default function AdminProductsPage() {
                 Add Product
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-auto">
               <DialogHeader>
                 <DialogTitle>Add New Product</DialogTitle>
                 <DialogDescription>Create a new digital product for your store</DialogDescription>
@@ -423,7 +423,7 @@ export default function AdminProductsPage() {
         </div>
 
         {/* Search and Filters */}
-        <div className="bg-stone-800 rounded-lg border border-stone-700 p-4 sm:p-6 mb-6">
+        <div className="bg-stone-800 rounded-lg border border-stone-700 p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="relative w-full sm:flex-1 sm:max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
@@ -465,17 +465,17 @@ export default function AdminProductsPage() {
 
             {/* Products Table */}
             <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
-              <div className="overflow-x-auto">
-              <Table>
+              <div className="overflow-x-auto min-h-[400px]">
+              <Table className="w-full min-w-[900px]">
                 <TableHeader>
                   <TableRow className="border-stone-700">
-                    <TableHead className="text-stone-300">Product</TableHead>
-                    <TableHead className="text-stone-300">Category</TableHead>
-                    <TableHead className="text-stone-300">Price</TableHead>
-                    <TableHead className="text-stone-300">Status</TableHead>
-                    <TableHead className="text-stone-300">Sales</TableHead>
-                    <TableHead className="text-stone-300">Created</TableHead>
-                    <TableHead className="text-right text-stone-300">Actions</TableHead>
+                    <TableHead className="text-stone-300 min-w-[200px]">Product</TableHead>
+                    <TableHead className="text-stone-300 min-w-[120px]">Category</TableHead>
+                    <TableHead className="text-stone-300 min-w-[80px]">Price</TableHead>
+                    <TableHead className="text-stone-300 min-w-[100px]">Status</TableHead>
+                    <TableHead className="text-stone-300 min-w-[60px]">Sales</TableHead>
+                    <TableHead className="text-stone-300 min-w-[100px]">Created</TableHead>
+                    <TableHead className="text-right text-stone-300 min-w-[120px]">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -502,13 +502,13 @@ export default function AdminProductsPage() {
                                 alt={product.title}
                                 width={40}
                                 height={40}
-                                className="rounded-lg object-cover"
+                                className="rounded-lg object-cover flex-shrink-0"
                               />
                             )}
-                            <div>
-                              <div className="font-medium text-white">{product.title}</div>
+                            <div className="min-w-0 flex-1">
+                              <div className="font-medium text-white truncate max-w-[160px]" title={product.title}>{product.title}</div>
                               {product.featured && (
-                                <Badge variant="secondary" className="text-xs">Featured</Badge>
+                                <Badge variant="secondary" className="text-xs mt-1">Featured</Badge>
                               )}
                             </div>
                           </div>
@@ -543,19 +543,19 @@ export default function AdminProductsPage() {
                         <TableCell className="text-white">{product._count.orders}</TableCell>
                         <TableCell className="text-white">{new Date(product.createdAt).toLocaleDateString()}</TableCell>
                         <TableCell className="text-right">
-                          <div className="flex items-center justify-end space-x-2">
-                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700" asChild>
+                          <div className="flex items-center justify-end space-x-1">
+                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700 h-8 w-8 p-0" asChild>
                               <Link href={`/product/${product.id}`} target="_blank">
                                 <Eye className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700" onClick={() => openEditDialog(product)}>
+                            <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700 h-8 w-8 p-0" onClick={() => openEditDialog(product)}>
                               <Edit className="h-4 w-4" />
                             </Button>
                             <Button 
                               variant="ghost" 
                               size="sm" 
-                              className="text-red-400 hover:text-red-300 hover:bg-stone-700"
+                              className="text-red-400 hover:text-red-300 hover:bg-stone-700 h-8 w-8 p-0"
                               onClick={() => handleDelete(product.id)}
                               disabled={product._count.orders > 0}
                             >
@@ -573,7 +573,7 @@ export default function AdminProductsPage() {
         </div>
       </div>
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto mx-4 sm:mx-auto">
           <DialogHeader>
             <DialogTitle>Edit Product</DialogTitle>
             <DialogDescription>Update product information</DialogDescription>

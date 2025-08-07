@@ -129,12 +129,12 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-3 sm:p-4 lg:p-6 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Orders</h1>
-          <p className="text-sm sm:text-base text-stone-400">Manage customer orders and downloads</p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-white mb-1 sm:mb-2">Orders</h1>
+          <p className="text-xs sm:text-sm lg:text-base text-stone-400">Manage customer orders and downloads</p>
         </div>
         <Button 
           onClick={fetchOrders}
@@ -147,7 +147,7 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
         <div className="relative w-full sm:flex-1 sm:max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-stone-400" />
           <Input
@@ -175,17 +175,17 @@ export default function AdminOrdersPage() {
 
       {/* Orders Table */}
       <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
-        <div className="overflow-x-auto">
-        <Table>
+        <div className="overflow-x-auto min-h-[400px]">
+        <Table className="w-full min-w-[800px]">
           <TableHeader>
             <TableRow className="border-stone-700">
-              <TableHead className="text-stone-300">Order ID</TableHead>
-              <TableHead className="text-stone-300">Customer</TableHead>
-              <TableHead className="text-stone-300">Products</TableHead>
-              <TableHead className="text-stone-300">Total</TableHead>
-              <TableHead className="text-stone-300">Status</TableHead>
-              <TableHead className="text-stone-300">Date</TableHead>
-              <TableHead className="text-stone-300">Actions</TableHead>
+              <TableHead className="text-stone-300 min-w-[100px]">Order ID</TableHead>
+              <TableHead className="text-stone-300 min-w-[200px]">Customer</TableHead>
+              <TableHead className="text-stone-300 min-w-[150px]">Products</TableHead>
+              <TableHead className="text-stone-300 min-w-[80px]">Total</TableHead>
+              <TableHead className="text-stone-300 min-w-[120px]">Status</TableHead>
+              <TableHead className="text-stone-300 min-w-[120px]">Date</TableHead>
+              <TableHead className="text-stone-300 min-w-[100px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -205,15 +205,19 @@ export default function AdminOrdersPage() {
               filteredOrders.map((order) => (
                 <TableRow key={order.id} className="border-stone-700">
                   <TableCell className="text-white font-mono text-sm">
-                    {order.id.slice(-8)}
+                    <div className="truncate max-w-[100px]">
+                      {order.id.slice(-8)}
+                    </div>
                   </TableCell>
                   <TableCell className="text-white">
-                    {order.email}
+                    <div className="truncate max-w-[200px]" title={order.email}>
+                      {order.email}
+                    </div>
                   </TableCell>
                   <TableCell className="text-stone-300">
-                    <div className="space-y-1">
+                    <div className="space-y-1 max-w-[150px]">
                       {order.items.map((item) => (
-                        <div key={item.id} className="text-sm">
+                        <div key={item.id} className="text-sm truncate" title={`${item.quantity}x ${item.product.title}`}>
                           {item.quantity}x {item.product.title}
                         </div>
                       ))}
@@ -245,11 +249,11 @@ export default function AdminOrdersPage() {
                     {formatDate(order.createdAt)}
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center justify-center space-x-1">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-stone-400 hover:text-white"
+                        className="text-stone-400 hover:text-white h-8 w-8 p-0"
                         onClick={() => {
                           toast.info('Order details coming soon')
                         }}
@@ -260,7 +264,7 @@ export default function AdminOrdersPage() {
                         <Button
                           variant="ghost"
                           size="sm" 
-                          className="text-stone-400 hover:text-white"
+                          className="text-stone-400 hover:text-white h-8 w-8 p-0"
                           onClick={() => {
                             toast.info('Download management coming soon')
                           }}
@@ -279,26 +283,26 @@ export default function AdminOrdersPage() {
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 sm:mt-8">
-        <div className="bg-stone-800 p-4 rounded-lg border border-stone-700">
-          <h3 className="text-stone-400 text-sm mb-1">Total Orders</h3>
-          <p className="text-2xl font-bold text-white">{orders.length}</p>
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-4 sm:mt-6 lg:mt-8">
+        <div className="bg-stone-800 p-3 sm:p-4 rounded-lg border border-stone-700">
+          <h3 className="text-stone-400 text-xs sm:text-sm mb-1">Total Orders</h3>
+          <p className="text-lg sm:text-xl lg:text-2xl font-bold text-white">{orders.length}</p>
         </div>
-        <div className="bg-stone-800 p-4 rounded-lg border border-stone-700">
-          <h3 className="text-stone-400 text-sm mb-1">Completed</h3>
-          <p className="text-2xl font-bold text-green-400">
+        <div className="bg-stone-800 p-3 sm:p-4 rounded-lg border border-stone-700">
+          <h3 className="text-stone-400 text-xs sm:text-sm mb-1">Completed</h3>
+          <p className="text-lg sm:text-xl lg:text-2xl font-bold text-green-400">
             {orders.filter(o => o.status === 'COMPLETED').length}
           </p>
         </div>
-        <div className="bg-stone-800 p-4 rounded-lg border border-stone-700">
-          <h3 className="text-stone-400 text-sm mb-1">Pending</h3>
-          <p className="text-2xl font-bold text-yellow-400">
+        <div className="bg-stone-800 p-3 sm:p-4 rounded-lg border border-stone-700">
+          <h3 className="text-stone-400 text-xs sm:text-sm mb-1">Pending</h3>
+          <p className="text-lg sm:text-xl lg:text-2xl font-bold text-yellow-400">
             {orders.filter(o => o.status === 'PENDING').length}
           </p>
         </div>
-        <div className="bg-stone-800 p-4 rounded-lg border border-stone-700">
-          <h3 className="text-stone-400 text-sm mb-1">Total Revenue</h3>
-          <p className="text-2xl font-bold text-white">
+        <div className="bg-stone-800 p-3 sm:p-4 rounded-lg border border-stone-700">
+          <h3 className="text-stone-400 text-xs sm:text-sm mb-1 truncate">Total Revenue</h3>
+          <p className="text-base sm:text-lg lg:text-2xl font-bold text-white truncate">
             {formatPrice(orders
               .filter(o => o.status === 'COMPLETED')
               .reduce((sum, o) => sum + o.totalAmount, 0)
