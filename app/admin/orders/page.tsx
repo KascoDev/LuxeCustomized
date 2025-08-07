@@ -129,7 +129,7 @@ export default function AdminOrdersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
         <div>

@@ -57,6 +57,17 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  
+  /* Admin pages mobile viewport fix */
+  body:has([data-admin-layout]) {
+    @apply bg-stone-900;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  
+  html:has([data-admin-layout]) {
+    @apply bg-stone-900;
+  }
 }
 
 /* Custom luxury styling */

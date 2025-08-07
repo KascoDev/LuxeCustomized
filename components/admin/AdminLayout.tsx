@@ -177,7 +177,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-stone-900 dark">
+    <div className="min-h-screen min-h-[100dvh] bg-stone-900 dark" data-admin-layout>
       {/* Mobile header with menu button */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-stone-800 border-b border-stone-700 h-16 flex items-center px-4">
         <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>

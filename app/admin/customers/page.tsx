@@ -5,7 +5,7 @@ import { Users, UserCheck, Clock, Mail } from "lucide-react"
 
 export default function AdminCustomersPage() {
   return (
-    <div className="min-h-screen bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen min-h-[100dvh] bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Customers</h1>
