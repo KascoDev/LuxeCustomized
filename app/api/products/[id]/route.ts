@@ -58,7 +58,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
 
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(
@@ -91,7 +91,7 @@ export async function PUT(
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: error.errors },
+        { error: error.errors[0]?.message || 'Validation failed' },
         { status: 400 }
       )
     }
@@ -109,7 +109,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
 
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(

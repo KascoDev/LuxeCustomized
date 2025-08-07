@@ -26,7 +26,14 @@
       "Bash(mv:*)",
       "Bash(grep:*)",
       "WebFetch(domain:localhost)",
-      "Bash(npx next build:*)"
+      "Bash(npx next build:*)",
+      "Bash(cross-env:*)",
+      "Bash(set NODE_OPTIONS=--max-old-space-size=4096)",
+      "Bash(next dev:*)",
+      "Bash(npx next:*)",
+      "Bash(set NODE_ENV=development)",
+      "Bash(copy:*)",
+      "Bash(cp:*)"
     ],
     "deny": []
   }

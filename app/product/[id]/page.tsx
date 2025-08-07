@@ -1,65 +1,22 @@
 import { notFound } from 'next/navigation'
-import { db } from '@/lib/db'
 import { generateProductMetadata, generateProductStructuredData, generateBreadcrumbStructuredData } from '@/lib/seo'
 import { StructuredData } from '@/components/seo/StructuredData'
 import ProductClient from './ProductClient'
+import { safeGetProduct, safeGetRelatedProducts } from '@/lib/safe-db'
+
+// Force dynamic rendering to avoid Jest worker issues
+export const dynamic = 'force-dynamic'
+export const dynamicParams = true
+export const revalidate = 0
 
 interface Props {
   params: Promise<{ id: string }>
 }
 
-async function getProduct(id: string) {
-  try {
-    const product = await db.product.findUnique({
-      where: { 
-        id,
-        status: 'ACTIVE'
-      },
-      include: {
-        category: true,
-        _count: {
-          select: {
-            orders: true
-          }
-        }
-      }
-    })
-    return product
-  } catch (error) {
-    return null
-  }
-}
-
-async function getRelatedProducts(categoryId: string, excludeId: string) {
-  try {
-    const relatedProducts = await db.product.findMany({
-      where: {
-        categoryId,
-        status: 'ACTIVE',
-        id: { not: excludeId }
-      },
-      include: {
-        category: true,
-        _count: {
-          select: {
-            orders: true
-          }
-        }
-      },
-      take: 4,
-      orderBy: {
-        featured: 'desc'
-      }
-    })
-    return relatedProducts
-  } catch (error) {
-    return []
-  }
-}
 
 export async function generateMetadata({ params }: Props) {
   const { id } = await params
-  const product = await getProduct(id)
+  const product = await safeGetProduct(id)
   
   if (!product) {
     return {
@@ -73,14 +30,15 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params
-  const product = await getProduct(id)
+  
+  // Use safe database functions with built-in fallbacks
+  const product = await safeGetProduct(id)
+  const relatedProducts = await safeGetRelatedProducts(product.category.id, product.id)
   
   if (!product) {
     notFound()
   }
 
-  const relatedProducts = await getRelatedProducts(product.categoryId, product.id)
-  
   // Generate structured data
   const productStructuredData = generateProductStructuredData(product)
   const breadcrumbData = generateBreadcrumbStructuredData([
@@ -98,23 +56,24 @@ export default async function ProductPage({ params }: Props) {
 }
 
 // Generate static params for popular products (optional)
-export async function generateStaticParams() {
-  try {
-    const products = await db.product.findMany({
-      where: {
-        status: 'ACTIVE',
-        featured: true
-      },
-      select: {
-        id: true
-      },
-      take: 50 // Generate static pages for top 50 featured products
-    })
+// Temporarily disabled to debug Jest worker issue
+// export async function generateStaticParams() {
+//   try {
+//     const products = await db.product.findMany({
+//       where: {
+//         status: 'ACTIVE',
+//         featured: true
+//       },
+//       select: {
+//         id: true
+//       },
+//       take: 50 // Generate static pages for top 50 featured products
+//     })
 
-    return products.map((product) => ({
-      id: product.id,
-    }))
-  } catch (error) {
-    return []
-  }
-}
+//     return products.map((product) => ({
+//       id: product.id,
+//     }))
+//   } catch (error) {
+//     return []
+//   }
+// }

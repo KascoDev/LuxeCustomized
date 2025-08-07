@@ -50,7 +50,7 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
 
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(
@@ -98,7 +98,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
 
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(

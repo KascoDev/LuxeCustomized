@@ -3,12 +3,13 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Filter, Search, Star } from "lucide-react"
+import { Filter, Search, Star, Menu } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { AIEOContentStructure, AIHeading, AIContentBlock, StructuredData } from "@/components/seo/StructuredData"
 import { FAQ, templateFAQData } from "@/components/seo/FAQ"
 import { 
@@ -154,11 +155,56 @@ export default function HomePage() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/account/orders" className="text-stone-600 hover:text-stone-900 transition-colors">
+              <div className="md:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon" className="text-stone-600">
+                      <Menu className="h-6 w-6" />
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="p-0 bg-white border-r-0 w-64">
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center px-4 py-6 border-b border-stone-200">
+                        <Link href="/" className="flex items-center">
+                          <Image
+                            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LCC-lbqsNL0FobNj8eWA0CiO5u7QKAwekD.png"
+                            alt="Luxe Customized"
+                            width={150}
+                            height={75}
+                            className="h-10 w-auto"
+                            priority
+                            quality={90}
+                          />
+                        </Link>
+                      </div>
+                      <nav className="flex-1 px-4 py-6 space-y-1">
+                        <Link href="#featured" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                          Templates
+                        </Link>
+                        <Link href="#collection" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                          Collections
+                        </Link>
+                        <Link href="#faq" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                          About
+                        </Link>
+                        <Link href="/account/orders" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                          My Orders
+                        </Link>
+                        {isAdmin && (
+                          <Link href="/admin/products" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                            Admin Dashboard
+                          </Link>
+                        )}
+                      </nav>
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              </div>
+              <Link href="/account/orders" className="hidden md:block text-stone-600 hover:text-stone-900 transition-colors">
                 My Orders
               </Link>
               {isAdmin && (
-                <Link href="/admin/products">
+                <Link href="/admin/products" className="hidden md:block">
                   <Button variant="outline" size="sm">
                     Admin Dashboard
                   </Button>
@@ -334,6 +380,7 @@ export default function HomePage() {
                         src={product.images[0] || "/placeholder.svg"}
                         alt={product.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       <div className="absolute top-4 left-4">
@@ -446,6 +493,7 @@ export default function HomePage() {
                         src={product.images[0] || "/placeholder.svg"}
                         alt={product.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                       {product.featured && (

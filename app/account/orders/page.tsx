@@ -91,13 +91,14 @@ export default function OrdersPage() {
               <Link href="/" className="text-2xl font-serif font-bold text-stone-900">
                 LuxeCustomized
               </Link>
-              <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors">
+              <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors text-sm sm:text-base">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Templates
+                <span className="hidden sm:inline">Back to Templates</span>
+                <span className="inline sm:hidden">Back</span>
               </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-stone-600 text-sm">Need help? Contact support</span>
+              <span className="text-stone-600 text-sm hidden sm:block">Need help? Contact support</span>
             </div>
           </div>
         </div>

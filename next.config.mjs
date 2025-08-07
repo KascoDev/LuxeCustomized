@@ -1,8 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    serverComponentsExternalPackages: ['bcrypt'],
+    serverComponentsExternalPackages: ['bcrypt', '@prisma/client', 'prisma'],
     workerThreads: false,
+    cpus: 1,
+  },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: /node_modules/,
+      }
+    }
+    
+    // Handle Prisma client properly
+    config.externals = [...(config.externals || []), 'canvas', 'jsdom']
+    
+    // Disable webpack's built-in worker pool
+    config.infrastructureLogging = { level: 'error' }
+    
+    return config
   },
   eslint: {
     ignoreDuringBuilds: true,

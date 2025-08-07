@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background circle with gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#44403c"/>
+    </linearGradient>
+    <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7f2ec"/>
+      <stop offset="100%" stop-color="#e7e5e4"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)"/>
+  
+  <!-- Main icon - stylized "LC" for LuxeCustomized -->
+  <g fill="url(#iconGradient)" stroke="none">
+    <!-- L -->
+    <rect x="140" y="160" width="40" height="192" rx="8"/>
+    <rect x="140" y="312" width="80" height="40" rx="8"/>
+    
+    <!-- C -->
+    <path d="M270 160 C330 160 380 210 380 270 C380 330 330 380 270 380 L270 340 C308 340 340 308 340 270 C340 232 308 200 270 200 L270 160 Z"/>
+    <rect x="270" y="200" width="40" height="40" rx="8"/>
+    <rect x="270" y="300" width="40" height="40" rx="8"/>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="320" cy="180" r="6" fill="#f59e0b" opacity="0.8"/>
+  <circle cx="200" cy="320" r="4" fill="#f59e0b" opacity="0.6"/>
+  <circle cx="350" cy="300" r="3" fill="#f59e0b" opacity="0.4"/>
+</svg>

@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     // Check if this is an admin request (no email parameter means get all orders)
     if (!email) {
       // Admin access - get all orders
-      const session = await getAuthSession(request)
+      const session = await getAuthSession()
       if (!session || session.user.role !== 'admin') {
         return NextResponse.json(
           { error: 'Unauthorized' },

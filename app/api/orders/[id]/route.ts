@@ -14,7 +14,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -66,7 +66,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized' },
@@ -149,7 +149,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getAuthSession(request)
+    const session = await getAuthSession()
     if (!session || session.user.role !== 'admin') {
       return NextResponse.json(
         { error: 'Unauthorized' },

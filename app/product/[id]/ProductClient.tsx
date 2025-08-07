@@ -45,12 +45,36 @@ interface ProductClientProps {
 }
 
 export default function ProductClient({ product, relatedProducts }: ProductClientProps) {
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [email, setEmail] = useState("")
   const [isPurchasing, setIsPurchasing] = useState(false)
 
-  const rating = 4.8 + Math.random() * 0.2
-  const reviews = Math.floor(Math.random() * 50) + 20
+  // Use deterministic values based on product ID to avoid hydration mismatch
+  const getProductRating = (productId: string) => {
+    // Simple hash function to get consistent pseudo-random values
+    let hash = 0;
+    for (let i = 0; i < productId.length; i++) {
+      const char = productId.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return 4.8 + (Math.abs(hash) % 20) / 100; // Rating between 4.8 and 4.99
+  }
+
+  const getProductReviews = (productId: string) => {
+    // Simple hash function to get consistent pseudo-random values
+    let hash = 0;
+    for (let i = 0; i < productId.length; i++) {
+      const char = productId.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return Math.abs(hash) % 50 + 20; // Reviews between 20 and 69
+  }
+
+  const rating = getProductRating(product.id)
+  const reviews = getProductReviews(product.id)
 
   const handlePurchase = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -95,17 +119,18 @@ export default function ProductClient({ product, relatedProducts }: ProductClien
               </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors">
+              <Link href="/" className="flex items-center text-stone-600 hover:text-stone-900 transition-colors text-sm sm:text-base">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Collection
+                <span className="hidden sm:inline">Back to Collection</span>
+                <span className="inline sm:hidden">Back</span>
               </Link>
             </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <Button variant="ghost" size="sm" className="hidden sm:flex">
                 <Heart className="h-4 w-4 mr-2" />
                 Save
               </Button>
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="hidden sm:flex">
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </Button>
