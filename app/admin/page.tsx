@@ -107,7 +107,7 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="p-4 sm:p-6 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-stone-900 p-4 sm:p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">Dashboard</h1>

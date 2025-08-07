@@ -137,7 +137,7 @@ export default function AdminCategoriesPage() {
 
   return (
     <>
-      <div className="p-4 sm:p-6">
+      <div className="min-h-screen bg-stone-900 p-4 sm:p-6">
         <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
           <div>
