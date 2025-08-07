@@ -463,8 +463,8 @@ export default function AdminProductsPage() {
               </div>
             </div>
 
-            {/* Products Table */}
-            <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
+            {/* Products Table - Desktop */}
+            <div className="hidden lg:block bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
               <div className="overflow-x-auto min-h-[400px]">
               <Table className="w-full min-w-[900px]">
                 <TableHeader>
@@ -569,6 +569,127 @@ export default function AdminProductsPage() {
                 </TableBody>
               </Table>
               </div>
+            </div>
+
+            {/* Products Cards - Mobile */}
+            <div className="lg:hidden space-y-4">
+              {isLoading ? (
+                <div className="text-center py-8 text-stone-400">
+                  Loading products...
+                </div>
+              ) : filteredProducts.length === 0 ? (
+                <div className="text-center py-8 text-stone-400">
+                  No products found
+                </div>
+              ) : (
+                filteredProducts.map((product) => (
+                  <div key={product.id} className="bg-stone-800 rounded-lg border border-stone-700 p-4">
+                    {/* Product Header */}
+                    <div className="flex items-start gap-3 mb-3">
+                      {product.images.length > 0 && (
+                        <Image
+                          src={product.images[0]}
+                          alt={product.title}
+                          width={60}
+                          height={60}
+                          className="rounded-lg object-cover flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-white font-medium text-sm truncate mb-1">{product.title}</h3>
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <Badge variant="outline" className="text-xs">{product.category.name}</Badge>
+                          <Badge
+                            variant={product.status === "ACTIVE" ? "default" : "secondary"}
+                            className={`text-xs ${
+                              product.status === "ACTIVE"
+                                ? "!bg-green-900/20 !text-green-400 !border-green-900/30"
+                                : product.status === "DRAFT"
+                                ? "!bg-yellow-900/20 !text-yellow-400 !border-yellow-900/30" 
+                                : "!bg-stone-700 !text-stone-300 !border-stone-600"
+                            }`}
+                          >
+                            {product.status}
+                          </Badge>
+                          {product.featured && (
+                            <Badge variant="outline" className="text-xs !bg-blue-900/20 !text-blue-400 !border-blue-900/30">
+                              Featured
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Product Details */}
+                    <div className="grid grid-cols-2 gap-4 mb-3 text-xs">
+                      <div>
+                        <span className="text-stone-400">Price:</span>
+                        <div className="text-white font-semibold">
+                          ${(product.price / 100).toFixed(2)}
+                          {product.originalPrice && (
+                            <span className="text-stone-400 line-through ml-1">
+                              ${(product.originalPrice / 100).toFixed(2)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-stone-400">Sales:</span>
+                        <div className="text-white font-semibold">{product._count.orders}</div>
+                      </div>
+                      <div>
+                        <span className="text-stone-400">Created:</span>
+                        <div className="text-white">{new Date(product.createdAt).toLocaleDateString()}</div>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="ghost" size="sm" className="text-stone-300 hover:text-white hover:bg-stone-700 text-xs px-3" asChild>
+                        <Link href={`/product/${product.id}`} target="_blank">
+                          <Eye className="h-3 w-3 mr-1" />
+                          View
+                        </Link>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-stone-300 hover:text-white hover:bg-stone-700 text-xs px-3"
+                        onClick={() => {
+                          setEditingProduct(product)
+                          setFormData({
+                            title: product.title,
+                            description: product.description,
+                            price: product.price / 100,
+                            originalPrice: product.originalPrice ? product.originalPrice / 100 : 0,
+                            canvaUrl: product.canvaUrl,
+                            categoryId: product.categoryId,
+                            images: product.images,
+                            featured: product.featured,
+                            tags: product.tags,
+                            features: product.features,
+                            includes: product.includes,
+                            status: product.status
+                          })
+                          setIsEditDialogOpen(true)
+                        }}
+                      >
+                        <Edit className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-400 hover:text-red-300 hover:bg-red-900/20 text-xs px-3"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
         </div>
       </div>

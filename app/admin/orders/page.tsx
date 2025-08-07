@@ -173,8 +173,8 @@ export default function AdminOrdersPage() {
         </Select>
       </div>
 
-      {/* Orders Table */}
-      <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
+      {/* Orders Table - Desktop */}
+      <div className="hidden lg:block bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
         <div className="overflow-x-auto min-h-[400px]">
         <Table className="w-full min-w-[800px]">
           <TableHeader>
@@ -280,6 +280,95 @@ export default function AdminOrdersPage() {
           </TableBody>
         </Table>
         </div>
+      </div>
+
+      {/* Orders Cards - Mobile */}
+      <div className="lg:hidden space-y-4">
+        {isLoading ? (
+          <div className="text-center py-8 text-stone-400">
+            Loading orders...
+          </div>
+        ) : filteredOrders.length === 0 ? (
+          <div className="text-center py-8 text-stone-400">
+            {searchTerm || statusFilter !== "all" ? "No orders match your filters" : "No orders found"}
+          </div>
+        ) : (
+          filteredOrders.map((order) => (
+            <div key={order.id} className="bg-stone-800 rounded-lg border border-stone-700 p-4">
+              {/* Order Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-white font-mono text-sm">#{order.id.slice(-8).toUpperCase()}</span>
+                    <Badge className={`text-xs border ${statusColors[order.status]}`}>
+                      {statusLabels[order.status]}
+                    </Badge>
+                  </div>
+                  <p className="text-stone-400 text-xs truncate">{order.email}</p>
+                </div>
+                <div className="text-left sm:text-right">
+                  <div className="text-white font-semibold">{formatPrice(order.totalAmount)}</div>
+                  <div className="text-stone-400 text-xs">{formatDate(order.createdAt)}</div>
+                </div>
+              </div>
+
+              {/* Products */}
+              <div className="mb-3">
+                <p className="text-stone-300 text-sm mb-1">Products:</p>
+                <div className="space-y-1">
+                  {order.items.map((item, index) => (
+                    <div key={index} className="text-stone-400 text-xs flex justify-between">
+                      <span className="truncate pr-2">{item.quantity}x {item.product.title}</span>
+                      <span className="text-nowrap">${(item.price / 100).toFixed(2)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Select value={order.status} onValueChange={(value) => updateOrderStatus(order.id, value)}>
+                  <SelectTrigger className="w-full sm:w-32 bg-stone-700 border-stone-600 text-white text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-stone-800 border-stone-600">
+                    <SelectItem value="PENDING" className="text-white">Pending</SelectItem>
+                    <SelectItem value="PROCESSING" className="text-white">Processing</SelectItem>
+                    <SelectItem value="COMPLETED" className="text-white">Completed</SelectItem>
+                    <SelectItem value="FAILED" className="text-white">Failed</SelectItem>
+                    <SelectItem value="REFUNDED" className="text-white">Refunded</SelectItem>
+                  </SelectContent>
+                </Select>
+                <div className="flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-stone-400 hover:text-white text-xs px-3"
+                    onClick={() => {
+                      toast.info('Order details coming soon')
+                    }}
+                  >
+                    <Eye className="h-3 w-3 mr-1" />
+                    View
+                  </Button>
+                  {order.downloadToken && (
+                    <Button
+                      variant="ghost"
+                      size="sm" 
+                      className="text-stone-400 hover:text-white text-xs px-3"
+                      onClick={() => {
+                        toast.info('Download management coming soon')
+                      }}
+                    >
+                      <Download className="h-3 w-3 mr-1" />
+                      Download
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Summary Stats */}

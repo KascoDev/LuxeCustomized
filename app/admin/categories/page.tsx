@@ -223,8 +223,8 @@ export default function AdminCategoriesPage() {
               </div>
             </div>
 
-            {/* Categories Table */}
-            <div className="bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
+            {/* Categories Table - Desktop */}
+            <div className="hidden lg:block bg-stone-800 rounded-lg border border-stone-700 overflow-hidden">
               <div className="overflow-x-auto min-h-[400px]">
               <Table className="w-full min-w-[700px]">
                 <TableHeader>
@@ -300,6 +300,74 @@ export default function AdminCategoriesPage() {
                 </TableBody>
               </Table>
               </div>
+            </div>
+
+            {/* Categories Cards - Mobile */}
+            <div className="lg:hidden space-y-4">
+              {isLoading ? (
+                <div className="text-center py-8 text-stone-400">
+                  Loading categories...
+                </div>
+              ) : filteredCategories.length === 0 ? (
+                <div className="text-center py-8 text-stone-400">
+                  No categories found
+                </div>
+              ) : (
+                filteredCategories.map((category) => (
+                  <div key={category.id} className="bg-stone-800 rounded-lg border border-stone-700 p-4">
+                    {/* Category Header */}
+                    <div className="flex items-start gap-3 mb-3">
+                      {category.image && (
+                        <Image
+                          src={category.image}
+                          alt={category.name}
+                          width={50}
+                          height={50}
+                          className="rounded-lg object-cover flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-white font-medium text-sm mb-1">{category.name}</h3>
+                        <p className="text-stone-400 text-xs line-clamp-2">{category.description || "No description"}</p>
+                      </div>
+                    </div>
+
+                    {/* Category Details */}
+                    <div className="grid grid-cols-2 gap-4 mb-3 text-xs">
+                      <div>
+                        <span className="text-stone-400">Products:</span>
+                        <div className="text-white font-semibold">{category._count.products}</div>
+                      </div>
+                      <div>
+                        <span className="text-stone-400">Created:</span>
+                        <div className="text-white">{new Date(category.createdAt).toLocaleDateString()}</div>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-stone-300 hover:text-white hover:bg-stone-700 text-xs px-3 flex-1"
+                        onClick={() => openEditDialog(category)}
+                      >
+                        <Edit className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-400 hover:text-red-300 hover:bg-red-900/20 text-xs px-3 flex-1"
+                        onClick={() => handleDelete(category.id)}
+                      >
+                        <Trash2 className="h-3 w-3 mr-1" />
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
         </div>
       </div>
