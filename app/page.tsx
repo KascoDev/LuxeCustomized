@@ -49,6 +49,7 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [sortBy, setSortBy] = useState("featured")
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   
   // For public homepage, no admin check needed
   const isAdmin = false
@@ -156,7 +157,7 @@ export default function HomePage() {
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <div className="md:hidden">
-                <Sheet>
+                <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
                   <SheetTrigger asChild>
                     <Button variant="ghost" size="icon" className="text-stone-600 p-1">
                       <Menu className="h-5 w-5" />
@@ -165,7 +166,7 @@ export default function HomePage() {
                   <SheetContent side="left" className="p-0 bg-white border-r-0 w-64">
                     <div className="flex flex-col h-full">
                       <div className="flex items-center px-4 py-6 border-b border-stone-200">
-                        <Link href="/" className="flex items-center">
+                        <Link href="/" className="flex items-center" onClick={() => setSidebarOpen(false)}>
                           <Image
                             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/LCC-lbqsNL0FobNj8eWA0CiO5u7QKAwekD.png"
                             alt="Luxe Customized"
@@ -178,20 +179,20 @@ export default function HomePage() {
                         </Link>
                       </div>
                       <nav className="flex-1 px-4 py-6 space-y-1">
-                        <Link href="#featured" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                        <Link href="#featured" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100" onClick={() => setSidebarOpen(false)}>
                           Templates
                         </Link>
-                        <Link href="#collection" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                        <Link href="#collection" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100" onClick={() => setSidebarOpen(false)}>
                           Collections
                         </Link>
-                        <Link href="#faq" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                        <Link href="#faq" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100" onClick={() => setSidebarOpen(false)}>
                           About
                         </Link>
-                        <Link href="/account/orders" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                        <Link href="/account/orders" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100" onClick={() => setSidebarOpen(false)}>
                           My Orders
                         </Link>
                         {isAdmin && (
-                          <Link href="/admin/products" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100">
+                          <Link href="/admin/products" className="block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-stone-100" onClick={() => setSidebarOpen(false)}>
                             Admin Dashboard
                           </Link>
                         )}
